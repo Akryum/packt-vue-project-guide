@@ -1,0 +1,29 @@
+<html>
+<head>
+  <title>VueJS</title>
+</head>
+<body>
+  <!-- Include the library in the page -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+  <!-- Some HTML -->
+  <div id="root">
+    <p>Is this an Hello world?</p>
+  </div>
+
+  <!-- Some JavaScript -->
+  <script>
+  console.log('Yes! We are using Vue version', Vue.version)
+
+  // New VueJS instance
+  var app = new Vue({
+    // CSS selector of the root DOM element
+    el: '#root',
+    // Some data
+    data: () => ({
+      message: 'Hello Vue.js!',
+    }),
+  })
+  </script>
+</body>
+</html>
