@@ -8,7 +8,8 @@ new Vue({
   // Some data
   data () {
     return {
-      content: localStorage.getItem('content') || 'This is a note',
+      // content: 'This is a note',
+      content: localStorage.getItem('content') || 'You can write in **markdown**',
     }
   },
 
@@ -22,9 +23,38 @@ new Vue({
 
   // Change watchers
   watch: {
-    // Let's save the selection too
-    content (val) {
+    /*content: {
+      handler (val, oldVal) {
+        console.log('new note:', val, 'old note:', oldVal)
+        localStorage.setItem('content', val)
+      },
+      immediate: true,
+    },*/
+
+    /*content (val) {
       localStorage.setItem('content', val)
+    },*/
+
+    /*content: {
+      handler: 'saveNote',
+    },*/
+
+    content: 'saveNote',
+  },
+
+  methods: {
+    saveNote (val, oldVal) {
+      console.log('new note:', val, 'old note:', oldVal)
+      console.log('saving note:', this.content)
+      localStorage.setItem('content', this.content)
+      this.reportOperation('saving')
+    },
+    reportOperation (opName) {
+      console.log('The', opName, 'operation was completed!')
     },
   },
+
+  /* created () {
+    this.content = localStorage.getItem('content') || 'You can write in **markdown**'
+  }, */
 })
