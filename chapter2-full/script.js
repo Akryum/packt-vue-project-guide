@@ -9,12 +9,14 @@ new Vue({
   el: '#notebook',
 
   // Some data
-  data: () => ({
-    // These are loaded from localStorage and have a default value
-    // Don't forget the JSON parsing for the notes array
-    notes: JSON.parse(localStorage.getItem('notes')) || [],
-    selectedId: localStorage.getItem('selected-id') || null,
-  }),
+  data () {
+    return {
+      // These are loaded from localStorage and have a default value
+      // Don't forget the JSON parsing for the notes array
+      notes: JSON.parse(localStorage.getItem('notes')) || [],
+      selectedId: localStorage.getItem('selected-id') || null,
+    }
+  },
 
   // Computed properties
   computed: {
