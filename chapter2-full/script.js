@@ -52,11 +52,11 @@ new Vue({
   methods:{
     // Add a note with some default content and select it
     addNote () {
-      const time = new Date().getTime()
+      const time = Date.now()
       // Default new note
       const note = {
         id: String(time),
-        title: 'New note',
+        title: 'New note ' + (this.notes.length + 1),
         content: '**Hi!** This notebook is using [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) for formatting!',
         created: time,
         favorite: false,
