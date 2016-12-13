@@ -17,7 +17,7 @@
     <!-- Sidebar -->
     <aside class="side-bar">
       <div class="toolbar">
-        <button @click="addNote" :title="notes.length + ' note(s)'"><i class="material-icons">add</i> Add note</button>
+        <button @click="addNote" :title="notes.length + ' note(s) already'"><i class="material-icons">add</i> Add note</button>
       </div>
       <div class="notes">
         <div class="note" v-for="note of sortedNotes" :class="{selected: note === selectedNote}" @click="selectNote(note)"><i class="icon material-icons" v-if="note.favorite">star</i>{{note.title}}</div>
