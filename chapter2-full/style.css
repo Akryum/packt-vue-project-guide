@@ -101,8 +101,15 @@ input {
 }
 
 .status-bar {
-  color: #999;
-  font-style: italic;
+  color: #777;
+}
+
+.status-bar > span {
+  margin-right: 6px;
+}
+
+.status-bar .label {
+  color: #bbb;
 }
 
 textarea {

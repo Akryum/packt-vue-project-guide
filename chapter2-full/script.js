@@ -1,5 +1,5 @@
 
-Vue.filter('date', time => moment(time).format('DD/MM/YY, HH:mm:ss'))
+Vue.filter('date', time => moment(time).format('DD/MM/YY, HH:mm'))
 
 // New VueJS instance
 new Vue({
@@ -24,13 +24,23 @@ new Vue({
       // We return the matching note with selectedId
       return this.notes.find(note => note.id === this.selectedId)
     },
+
     notePreview () {
       // Markdown rendered to HTML
       return this.selectedNote ? marked(this.selectedNote.content) : ''
     },
+
     sortedNotes () {
       return this.notes.sort((a, b) => a.created - b.created)
       .sort((a, b) => (a.favorite === b.favorite)? 0 : a.favorite? -1 : 1)
+    },
+
+    linesCount () {
+      return this.selectedNote.content.split(/\r\n|\r|\n/).length
+    },
+
+    charactersCount () {
+      return this.selectedNote.content.split('').length
     },
   },
 
