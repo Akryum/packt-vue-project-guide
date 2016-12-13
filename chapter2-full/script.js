@@ -39,6 +39,14 @@ new Vue({
       return this.selectedNote.content.split(/\r\n|\r|\n/).length
     },
 
+    wordsCount () {
+      var s = this.selectedNote.content
+      s = s.replace(/\n/g, ' ')
+      s = s.replace(/(^\s*)|(\s*$)/gi, '') //exclude start and end white-space
+      s = s.replace(/[ ]{2,}/gi, ' ') // 2 or more space to 1
+      return s.split(' ').length
+    },
+
     charactersCount () {
       return this.selectedNote.content.split('').length
     },

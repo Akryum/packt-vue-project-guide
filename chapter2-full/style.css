@@ -106,6 +106,7 @@ input {
 
 .status-bar > span {
   margin-right: 6px;
+  white-space: nowrap;
 }
 
 .status-bar .label {
