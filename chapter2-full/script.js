@@ -95,19 +95,19 @@ new Vue({
     removeNote () {
       if (this.selectedNote && confirm('Delete the note?')) {
         // Remove the note in the notes array
-        const index = this.notes.indexOf(this.selectedNote)
+        const index = this.sortedNotes.indexOf(this.selectedNote)
         if (index !== -1) {
-          this.notes.splice(index, 1)
+          this.notes.splice(this.notes.indexOf(this.selectedNote), 1)
         }
 
         // If we found the note in the array and
         // if the array is still not empty
         // we select the next note in the array
-        if (index !== -1 && this.notes.length !== 0) {
+        if (index !== -1 && this.sortedNotes.length !== 0) {
           // Don't get past the array boundaries
-          const i = Math.min(index, this.notes.length - 1)
+          const i = Math.min(index, this.sortedNotes.length - 1)
           // Select the next note
-          this.selectedId = this.notes[i].id
+          this.selectNote(this.sortedNotes[i])
         } else {
           // Unselect
           this.selectedId = null
