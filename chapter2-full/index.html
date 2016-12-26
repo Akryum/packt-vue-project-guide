@@ -24,39 +24,43 @@
       </div>
     </aside>
 
-    <!-- Main pane -->
-    <section class="main" v-if="selectedNote">
-      <div class="toolbar">
-        <input v-model="selectedNote.title" placeholder="Note title" />
+    <template v-if="selectedNote">
 
-        <button @click="favoriteNote" title="Favorite note"><i class="material-icons">{{ selectedNote.favorite ? 'star' : 'star_border' }}</i></button>
+      <!-- Main pane -->
+      <section class="main">
+        <div class="toolbar">
+          <input v-model="selectedNote.title" placeholder="Note title" />
 
-        <button @click="removeNote" title="Remove note"><i class="material-icons">delete</i></button>
-      </div>
-      <textarea v-model="selectedNote.content"></textarea>
-      <div class="toolbar status-bar">
-        <span class="date">
-          <span class="label">Created</span>
-          <span class="value">{{ selectedNote.time | date }}</span>
-        </span>
-        <span class="lines">
-          <span class="label">Lines</span>
-          <span class="value">{{ linesCount }}</span>
-        </span>
-        <span class="words">
-          <span class="label">Words</span>
-          <span class="value">{{ wordsCount }}</span>
-        </span>
-        <span class="characters">
-          <span class="label">Characters</span>
-          <span class="value">{{ charactersCount }}</span>
-        </span>
-      </div>
-    </section>
+          <button @click="favoriteNote" title="Favorite note"><i class="material-icons">{{ selectedNote.favorite ? 'star' : 'star_border' }}</i></button>
 
-    <!-- Preview pane -->
-    <aside class="preview" v-if="selectedNote" v-html="notePreview">
-    </aside>
+          <button @click="removeNote" title="Remove note"><i class="material-icons">delete</i></button>
+        </div>
+        <textarea v-model="selectedNote.content"></textarea>
+        <div class="toolbar status-bar">
+          <span class="date">
+            <span class="label">Created</span>
+            <span class="value">{{ selectedNote.time | date }}</span>
+          </span>
+          <span class="lines">
+            <span class="label">Lines</span>
+            <span class="value">{{ linesCount }}</span>
+          </span>
+          <span class="words">
+            <span class="label">Words</span>
+            <span class="value">{{ wordsCount }}</span>
+          </span>
+          <span class="characters">
+            <span class="label">Characters</span>
+            <span class="value">{{ charactersCount }}</span>
+          </span>
+        </div>
+      </section>
+
+      <!-- Preview pane -->
+      <aside class="preview" v-html="notePreview">
+      </aside>
+
+    </template>
 
   </div>
 
