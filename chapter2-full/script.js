@@ -31,7 +31,7 @@ new Vue({
     },
 
     sortedNotes () {
-      return this.notes.concat().sort((a, b) => a.created - b.created)
+      return this.notes.slice().sort((a, b) => a.created - b.created)
       .sort((a, b) => (a.favorite === b.favorite)? 0 : a.favorite? -1 : 1)
     },
 
