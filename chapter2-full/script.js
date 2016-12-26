@@ -114,7 +114,8 @@ new Vue({
     },
 
     favoriteNote () {
-      this.selectedNote.favorite = !this.selectedNote.favorite
+      // this.selectedNote.favorite = !this.selectedNote.favorite
+      this.selectedNote.favorite ^= true
     },
   },
 })
