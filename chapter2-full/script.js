@@ -31,24 +31,30 @@ new Vue({
     },
 
     sortedNotes () {
-      return this.notes.sort((a, b) => a.created - b.created)
+      return this.notes.concat().sort((a, b) => a.created - b.created)
       .sort((a, b) => (a.favorite === b.favorite)? 0 : a.favorite? -1 : 1)
     },
 
     linesCount () {
-      return this.selectedNote.content.split(/\r\n|\r|\n/).length
+      if (this.selectedNote) {
+        return this.selectedNote.content.split(/\r\n|\r|\n/).length
+      }
     },
 
     wordsCount () {
-      var s = this.selectedNote.content
-      s = s.replace(/\n/g, ' ')
-      s = s.replace(/(^\s*)|(\s*$)/gi, '') //exclude start and end white-space
-      s = s.replace(/[ ]{2,}/gi, ' ') // 2 or more space to 1
-      return s.split(' ').length
+      if (this.selectedNote) {
+        var s = this.selectedNote.content
+        s = s.replace(/\n/g, ' ')
+        s = s.replace(/(^\s*)|(\s*$)/gi, '') //exclude start and end white-space
+        s = s.replace(/[ ]{2,}/gi, ' ') // 2 or more space to 1
+        return s.split(' ').length
+      }
     },
 
     charactersCount () {
-      return this.selectedNote.content.split('').length
+      if (this.selectedNote) {
+        return this.selectedNote.content.split('').length
+      }
     },
   },
 
@@ -117,6 +123,7 @@ new Vue({
     saveNotes () {
       // Don't forget to stringify to JSON before storing
       localStorage.setItem('notes', JSON.stringify(this.notes))
+      console.log('Notes saved!', new Date())
     },
 
     favoriteNote () {
