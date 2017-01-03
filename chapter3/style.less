@@ -1,0 +1,321 @@
+@bg: #6eabff;
+@primary: #356cdf;
+
+@card-attack: #9b1b1b;
+@card-special: #751b9b;
+@card-support: #1b6e9b;
+
+@world-ratio-raw: 1/1920;
+@world-ratio: @world-ratio-raw*100vw;
+
+@ease-in-out: cubic-bezier(0.4, 0.0, 0.2, 1);
+
+.h-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & > * {
+    flex: auto 0 0;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: 'Signika Negative', sans-serif;
+  background: @bg;
+  font-size: 22px;
+}
+
+.top-bar {
+  background: @primary;
+  color: white;
+  font-size: 42px;
+  .h-box;
+  padding: 32px;
+  position: relative;
+  z-index: 10;
+
+  .player {
+    flex: 100% 1 1;
+    text-align: center;
+  }
+
+  .turn-counter {
+    position: relative;
+    width: 300px;
+
+    .arrow {
+      max-width: 300px;
+      position: absolute;
+      top: -90px;
+      transition: transform 3s @ease-in-out;
+    }
+
+    .turn {
+      color: @primary;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  &.player-1 {
+    .turn-counter {
+      .arrow {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+.world {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+.castle {
+  position: absolute;
+  width: 760 * @world-ratio;
+  height: 890 * @world-ratio;
+  margin: 0 50 * @world-ratio;
+  z-index: 10;
+  bottom: 0;
+
+  .building {
+    max-width: 610 * @world-ratio;
+    min-width: 610 * @world-ratio;
+    position: absolute;
+    bottom: 285 * @world-ratio;
+    left: 75 * @world-ratio;
+  }
+
+  .ground {
+    max-width: 760 * @world-ratio;
+    min-width: 760 * @world-ratio;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  .banners {
+    position: absolute;
+    width: 65 * @world-ratio;
+    height: 260 * @world-ratio;
+    left: 100 * @world-ratio;
+    bottom: 390 * @world-ratio;
+
+    > * {
+      position: absolute;
+      top: 0;
+    }
+
+    .food-icon,
+    .health-icon {
+      z-index: 2;
+      max-width: 30 * @world-ratio;
+      min-width: 30 * @world-ratio;
+    }
+
+    .health-icon {
+      left: 35 * @world-ratio;
+    }
+
+    .food-bar,
+    .health-bar {
+      max-width: 20 * @world-ratio;
+      min-width: 20 * @world-ratio;
+      margin-left: 5 * @world-ratio;
+    }
+
+    .health-bar {
+      left: 35 * @world-ratio;
+    }
+
+    .food-bubble,
+    .health-bubble {
+      color: white;
+      text-align: center;
+      position: absolute;
+      z-index: 10;
+      font-size: 42px;
+      display: block;
+      width: 60px;
+      height: 60px;
+
+      img {
+        position: absolute;
+        top: -46px;
+        z-index: -1;
+      }
+
+      div {
+        position: relative;
+        top: -42px;
+      }
+
+      @media (max-width: 1200px) {
+        transform: scale(.7);
+      }
+
+      @media (max-width: 950px) {
+        transform: scale(.5);
+      }
+    }
+
+    @position: calc(~"-70px - 30 * "@world-ratio);
+
+    .food-bubble {
+      left: @position;
+      transform-origin: right top;
+
+      img {
+        left: 0;
+      }
+    }
+
+    .health-bubble {
+      right: @position;
+      transform-origin: left top;
+
+      img {
+        right: 0;
+      }
+    }
+  }
+
+  &.player-1 {
+    left: 0;
+  }
+
+  &.player-2 {
+    right: 0;
+
+    .banners {
+      left: auto;
+      right: 100 * @world-ratio;
+    }
+  }
+}
+
+.cloud {
+  position: absolute;
+  animation: cloud infinite;
+  animation-fill-mode: both;
+}
+
+@keyframes cloud{
+  from {
+    transform: translateX(-150vw);
+  }
+  to {
+    transform: translateX(150vw);
+  }
+}
+
+.hand {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  height: 300px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12px;
+
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.12+100 */
+  background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+  .cards {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.card {
+  width: 200px;
+  height: 260px;
+  background: grey;
+  color: white;
+  transition: all .3s;
+  padding: 12px;
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: auto 0 0;
+  cursor: pointer;
+  position: relative;
+  top: 0;
+
+  &:not(:last-child) {
+    margin-right: 12px;
+  }
+
+  .title,
+  .separator {
+    flex: auto 0 0;
+  }
+
+  .title {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .separator {
+    width: 155px;
+    height: 13px;
+    margin: auto;
+  }
+
+  .description {
+    flex: auto 1 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: fade(white, 80%);
+
+    b {
+      color: white;
+    }
+  }
+
+  &:hover {
+    top: -20px;
+  }
+
+  &.type-attack {
+    background: @card-attack;
+
+    &:hover {
+      background: lighten(@card-attack, 10%);
+    }
+  }
+
+  &.type-special {
+    background: @card-special;
+
+    &:hover {
+      background: lighten(@card-special, 10%);
+    }
+  }
+
+  &.type-support {
+    background: @card-support;
+
+    &:hover {
+      background: lighten(@card-support, 10%);
+    }
+  }
+}

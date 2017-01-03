@@ -1,0 +1,45 @@
+<html>
+<head>
+  <title>Castle Duel</title>
+  <!-- Icons & Stylesheets -->
+  <link href="https://fonts.googleapis.com/css?family=Signika+Negative:600" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet/less" type="text/css" href="style.less" />
+</head>
+<body>
+  <!-- Include the library in the page -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+  <!-- Less -->
+  <script>
+    less = {
+      env: "development",
+      poll: 1000,
+    };
+  </script>
+  <script src="https://unpkg.com/less@2.7.1"></script>
+  <script>less.watch();</script>
+
+  <!-- Game app -->
+  <div id="app">
+
+  </div>
+
+  <!-- Templates -->
+  <script type="text/x-template" id="banner">
+    <svg viewBox="0 0 20 260">
+      <path
+         id="path5233"
+         :d="`m 0,0 20,0 0,${height} -10,-10 -10,10 z`"
+         :style="`display:inline;fill:${color};fill-opacity:1;stroke:none;stroke-width:0.99969685;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:3.9987874, 7.99757481;stroke-dashoffset:5.59830236;stroke-opacity:1`" />
+    </svg>
+  </script>
+
+  <!-- Main script -->
+  <script src="cards.js"></script>
+  <script src="state.js"></script>
+  <script src="components/ui.js"></script>
+  <script src="components/world.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
