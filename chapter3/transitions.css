@@ -1,0 +1,53 @@
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .5s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
+.zoom-enter-active,
+.zoom-leave-active {
+  transition: opacity .3s, transform .3s;
+}
+
+.zoom-enter,
+.zoom-leave-active {
+  opacity: 0;
+  transform: scale(.7);
+}
+
+/* Hand */
+
+.hand-enter-active,
+.hand-leave-active {
+  transition: opacity .5s;
+}
+
+.hand-enter,
+.hand-leave-active {
+  opacity: 0;
+}
+
+.hand-enter-active .wrapper,
+.hand-leave-active .wrapper {
+  transition: transform .8s cubic-bezier(.08,.74,.34,1);
+  transform-origin: bottom center;
+}
+
+.hand-enter .wrapper,
+.hand-leave-active .wrapper {
+  transform: rotateX(90deg);
+}
+
+.hand-enter-active .card,
+.hand-leave-active .card {
+  transition: margin .8s cubic-bezier(.08,.74,.34,1);
+}
+
+.hand-enter .card,
+.hand-leave-active .card {
+  margin: 0 -200px;
+}

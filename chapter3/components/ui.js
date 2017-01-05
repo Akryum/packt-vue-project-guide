@@ -50,7 +50,7 @@ Vue.component('health-bubble', {
 })
 
 Vue.component('card', {
-  template: `<div class="card" :class="cssClass">
+  template: `<div class="card" :class="cssClass" @click="handleClick">
     <div class="title">{{ card.title }}</div>
     <img class="separator" src="svg/card-separator.svg" />
     <div class="description"><div v-html="card.description"></div></div>
@@ -63,13 +63,44 @@ Vue.component('card', {
       ]
     },
   },
+  methods: {
+    handleClick () {
+      this.$emit('play')
+    },
+  },
 })
 
 Vue.component('hand', {
   template: `<div class="hand">
-    <div class="cards">
-      <card v-for="card of cards" :card="card" />
+    <div class="wrapper">
+      <transition-group name="card" tag="div" class="cards">
+        <card v-for="(card, index) of cards" :key="card.id" :card="card" @play="handlePlay(card, index)" />
+      </transition-group>
     </div>
   </div>`,
   props: ['cards'],
+  methods: {
+    handlePlay (card, index) {
+      this.$emit('play', card, index)
+    },
+  },
+})
+
+Vue.component('overlay', {
+  template: `<div class="overlay" @click="handleClick">
+    <div class="content">
+      <slot></slot>
+    </div>
+  </div>`,
+  created () {
+    state.overlayShown = true
+  },
+  beforeDestroy () {
+    state.overlayShown = false
+  },
+  methods: {
+    handleClick () {
+      this.$emit('close')
+    },
+  },
 })

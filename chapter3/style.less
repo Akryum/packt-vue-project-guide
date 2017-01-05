@@ -1,5 +1,6 @@
 @bg: #6eabff;
 @primary: #356cdf;
+@ocean-color: #003580;
 
 @card-attack: #9b1b1b;
 @card-special: #751b9b;
@@ -32,23 +33,24 @@ body {
   color: white;
   font-size: 42px;
   .h-box;
-  padding: 32px;
+  padding: 12px;
   position: relative;
-  z-index: 10;
+  z-index: 100;
 
   .player {
     flex: 100% 1 1;
     text-align: center;
+    transition: all .3s;
   }
 
   .turn-counter {
     position: relative;
-    width: 300px;
+    width: 250px;
 
     .arrow {
-      max-width: 300px;
+      max-width: 250px;
+      top: -78px;
       position: absolute;
-      top: -90px;
       transition: transform 3s @ease-in-out;
     }
 
@@ -64,6 +66,32 @@ body {
     .turn-counter {
       .arrow {
         transform: rotate(180deg);
+      }
+    }
+
+    .player.p2 {
+      opacity: .75;
+      transform: scale(.9);
+    }
+  }
+
+  &.player-2 {
+    .player.p1 {
+      opacity: .75;
+      transform: scale(.9);
+    }
+  }
+
+  @media (max-width: 1200px) {
+    font-size: 32px;
+
+    .turn-counter {
+      position: relative;
+      width: 200px;
+
+      .arrow {
+        max-width: 200px;
+        top: -58px;
       }
     }
   }
@@ -84,7 +112,7 @@ body {
   height: 890 * @world-ratio;
   margin: 0 50 * @world-ratio;
   z-index: 10;
-  bottom: 0;
+  top: 10vh;
 
   .building {
     max-width: 610 * @world-ratio;
@@ -98,7 +126,6 @@ body {
     max-width: 760 * @world-ratio;
     min-width: 760 * @world-ratio;
     position: absolute;
-    bottom: 0;
     left: 0;
   }
 
@@ -190,10 +217,18 @@ body {
 
   &.player-1 {
     left: 0;
+
+    .ground {
+      bottom: -39 * @world-ratio;
+    }
   }
 
   &.player-2 {
     right: 0;
+
+    .ground {
+      bottom: -70 * @world-ratio;
+    }
 
     .banners {
       left: auto;
@@ -217,28 +252,39 @@ body {
   }
 }
 
+.ocean {
+  background: @ocean-color;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: calc(800 * @world-ratio);
+}
+
 .hand {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 20;
-  height: 300px;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 12px;
-
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.12+100 */
-  background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  padding: 12px 0;
+  background: fade(black, 70%);
+  background: linear-gradient(to bottom,  transparent 0%, fade(black, 40%) 100%);
+  perspective: 1000px;
 
   .cards {
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    @media (max-width: 1200px) {
+      transform: scale(.7);
+      height: 180px;
+    }
   }
 }
 
@@ -285,6 +331,7 @@ body {
     align-items: center;
     justify-content: center;
     color: fade(white, 80%);
+    font-size: 22px;
 
     b {
       color: white;
@@ -317,5 +364,36 @@ body {
     &:hover {
       background: lighten(@card-support, 10%);
     }
+  }
+}
+
+.overlay-background,
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.overlay-background {
+  background: fade(white, 70%);
+  z-index: 50;
+}
+
+.overlay {
+  z-index: 51;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  text-align: center;
+
+  .big {
+    font-size: 72px;
+  }
+
+  .card {
+    margin: 32px auto 0;
   }
 }

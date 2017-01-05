@@ -6,14 +6,14 @@
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    version="1.1"
-   id="svg6707"
-   viewBox="0 0 760.00001 345.00001"
-   height="97.366669mm"
+   id="svg4370"
+   viewBox="0 0 760.00001 415.89791"
+   height="117.37563mm"
    width="214.48889mm">
   <defs
-     id="defs6709" />
+     id="defs4372" />
   <metadata
-     id="metadata6712">
+     id="metadata4375">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -25,15 +25,15 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(-331.25129,-759.50506)"
+     transform="translate(-620.71429,-650.08752)"
      id="layer1">
     <g
        id="g7405"
        style="display:inline"
-       transform="translate(-818.74871,24.505057)">
+       transform="translate(-529.28571,-84.912475)">
       <path
          id="path5290"
-         d="m 1150,1080 20,-260 60,-60 165,-20 265,-5 170,25 60,60 20,260 z"
+         d="m 1150,1080 20,-260 60,-60 165,-20 265,-5 170,25 60,60 20,260 -274.7058,70.8979 -293.2055,-11.5009 z"
          style="fill:#dbc162;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
       <path
          id="path5292"

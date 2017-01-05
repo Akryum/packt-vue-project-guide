@@ -28,11 +28,11 @@
      inkscape:window-width="1920"
      units="px"
      showgrid="false"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer3"
      inkscape:document-units="px"
-     inkscape:cy="821.56792"
-     inkscape:cx="1348.7063"
-     inkscape:zoom="4"
+     inkscape:cy="448.51027"
+     inkscape:cx="561.57543"
+     inkscape:zoom="0.70710678"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -163,7 +163,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -510,7 +510,7 @@
      id="layer1"
      inkscape:groupmode="layer"
      inkscape:label="Castles"
-     style="display:none">
+     style="display:inline">
     <g
        id="g5309"
        transform="translate(0,-100)">
@@ -732,10 +732,10 @@
     <g
        id="g7401">
       <path
-         sodipodi:nodetypes="cccccccc"
+         sodipodi:nodetypes="cccccccccc"
          inkscape:connector-curvature="0"
          id="path5223"
-         d="m 15,1080 20,-259.99997 60,-60 140,-40 460,40 60,60 L 775,1080 Z"
+         d="m 15,1080 20,-259.99997 60,-60 140,-40 460,40 60,60 L 775,1080 664.68037,1115.3553 145.6352,1119.92 Z"
          style="fill:#d6715f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
       <path
          sodipodi:nodetypes="ccccccc"
@@ -748,10 +748,10 @@
        id="g7405">
       <path
          style="fill:#dbc162;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 1150,1080 20,-260 60,-60 165,-20 265,-5 170,25 60,60 20,260 z"
+         d="m 1150,1080 20,-260 60,-60 165,-20 265,-5 170,25 60,60 20,260 -274.7058,70.8979 -293.2055,-11.5009 z"
          id="path5290"
          inkscape:connector-curvature="0"
-         sodipodi:nodetypes="ccccccccc" />
+         sodipodi:nodetypes="ccccccccccc" />
       <path
          style="fill:#000000;fill-opacity:0.03921569;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          d="m 1580,775 180,20.00002 70,-35.00002 -170,-25 -265,5 -165,20 -45,45 145,-20 z"
@@ -991,7 +991,7 @@
      inkscape:groupmode="layer"
      id="layer10"
      inkscape:label="UI Background"
-     style="display:inline">
+     style="display:none">
     <rect
        y="751"
        x="0"
@@ -1004,7 +1004,7 @@
      inkscape:groupmode="layer"
      id="layer8"
      inkscape:label="Hand"
-     style="display:inline">
+     style="display:none">
     <g
        style="display:inline"
        id="g6050"
@@ -1399,7 +1399,7 @@
      inkscape:groupmode="layer"
      id="layer7"
      inkscape:label="Main UI"
-     style="display:inline">
+     style="display:none">
     <rect
        style="fill:#356cdf;fill-opacity:1;stroke:none;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:5.5999999;stroke-opacity:1"
        id="rect5742"

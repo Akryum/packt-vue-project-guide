@@ -8,23 +8,31 @@ function getWorldRatio () {
 
 var state = {
   turn: 1,
-  currentPlayerId: 1,
   players: {
     1: {
       food: 10,
       health: 10,
       skipTurn: false,
       hand: [],
+      lastPlayedCardId: null,
     },
     2: {
       food: 10,
       health: 10,
       skipTurn: false,
       hand: [],
+      lastPlayedCardId: null,
     },
+  },
+  currentPlayerId: 1,
+  get currentOpponentId () {
+    return state.currentPlayerId === 1 ? 2 : 1
   },
   get currentPlayer () {
     return state.players[state.currentPlayerId]
+  },
+  get currentOpponent () {
+    return state.players[state.currentOpponentId]
   },
   get currentHand () {
     return state.currentPlayer.hand.map(id => cards[id])
@@ -37,7 +45,11 @@ var state = {
       result += state.pool[k]
     }
     return result
-  }
+  },
+  playedCard: false,
+  overlayShown: false,
+  showPlayerTurn: true,
+  showLastPlay: false,
 }
 
 window.addEventListener('resize', () => {
