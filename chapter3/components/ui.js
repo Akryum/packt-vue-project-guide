@@ -73,15 +73,19 @@ Vue.component('card', {
 Vue.component('hand', {
   template: `<div class="hand">
     <div class="wrapper">
-      <transition-group name="card" tag="div" class="cards">
-        <card v-for="(card, index) of cards" :key="card.id" :card="card" @play="handlePlay(card, index)" />
+      <transition-group name="card" tag="div" class="cards" css @after-leave="handleLeaveTransitionEnd">
+        <card v-for="card of cards" :key="card.uid" :card="card.data" @play="handlePlay(card)" />
       </transition-group>
     </div>
   </div>`,
   props: ['cards'],
   methods: {
-    handlePlay (card, index) {
-      this.$emit('play', card, index)
+    handlePlay (card) {
+      this.$emit('play', card)
+    },
+
+    handleLeaveTransitionEnd () {
+      this.$emit('leave-transition-end')
     },
   },
 })
@@ -92,12 +96,6 @@ Vue.component('overlay', {
       <slot></slot>
     </div>
   </div>`,
-  created () {
-    state.overlayShown = true
-  },
-  beforeDestroy () {
-    state.overlayShown = false
-  },
   methods: {
     handleClick () {
       this.$emit('close')

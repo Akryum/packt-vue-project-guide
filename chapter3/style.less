@@ -51,7 +51,7 @@ body {
       max-width: 250px;
       top: -78px;
       position: absolute;
-      transition: transform 3s @ease-in-out;
+      transition: transform 1.5s @ease-in-out;
     }
 
     .turn {
@@ -275,6 +275,7 @@ body {
   background: fade(black, 70%);
   background: linear-gradient(to bottom,  transparent 0%, fade(black, 40%) 100%);
   perspective: 1000px;
+  pointer-events: none;
 
   .cards {
     display: flex;
@@ -288,12 +289,17 @@ body {
   }
 }
 
+.can-play {
+  .hand {
+    pointer-events: all;
+  }
+}
+
 .card {
   width: 200px;
   height: 260px;
   background: grey;
   color: white;
-  transition: all .3s;
   padding: 12px;
   box-sizing: border-box;
   text-align: center;
@@ -395,5 +401,6 @@ body {
 
   .card {
     margin: 32px auto 0;
+    pointer-events: none;
   }
 }

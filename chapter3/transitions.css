@@ -51,3 +51,35 @@
 .hand-leave-active .card {
   margin: 0 -200px;
 }
+
+/* Card */
+
+.card {
+  transition: all .3s;
+}
+
+.card-move {
+  transition: all .5s cubic-bezier(.08,.74,.34,1) !important;
+}
+
+.card-enter-active {
+  transition: opacity .7s, transform .7s cubic-bezier(.08,.74,.34,1) !important;
+}
+
+.card-enter {
+  opacity: 0;
+  transform: scale(.8) translateX(100px);
+}
+
+.card-leave-active {
+  transition: opacity .3s .5s, transform .5s cubic-bezier(.08,.74,.34,1), border .8s, margin .8s !important;
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.card-leave-active {
+  opacity: 0;
+  transform: scale(1.5) translateY(-200px);
+  border: solid 6px white;
+}

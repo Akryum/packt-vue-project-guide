@@ -21,7 +21,7 @@ var cards = {
   }
 }
 
-var pool = {
+var pile = {
   catapult: 8,
   repair: 4,
 }
