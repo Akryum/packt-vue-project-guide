@@ -189,7 +189,7 @@ function newTurn () {
     setTimeout(() => {
       state.currentPlayer.hand.push(drawCard())
       state.canPlay = true
-    }, 500)
+    }, 800)
   } else {
     state.canPlay = true
   }

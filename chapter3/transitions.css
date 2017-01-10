@@ -44,12 +44,12 @@
 
 .hand-enter-active .card,
 .hand-leave-active .card {
-  transition: margin .8s cubic-bezier(.08,.74,.34,1);
+  transition: all .8s cubic-bezier(.08,.74,.34,1);
 }
 
 .hand-enter .card,
 .hand-leave-active .card {
-  margin: 0 -200px;
+  margin: 0 -100px;
 }
 
 /* Card */
@@ -58,28 +58,20 @@
   transition: all .3s;
 }
 
-.card-move {
-  transition: all .5s cubic-bezier(.08,.74,.34,1) !important;
-}
-
-.card-enter-active {
-  transition: opacity .7s, transform .7s cubic-bezier(.08,.74,.34,1) !important;
-}
-
 .card-enter {
   opacity: 0;
   transform: scale(.8) translateX(100px);
 }
 
 .card-leave-active {
-  transition: opacity .3s .5s, transform .5s cubic-bezier(.08,.74,.34,1), border .8s, margin .8s !important;
-  position: absolute;
+  position: absolute !important;
   z-index: 10;
   pointer-events: none;
+  transition: all 1s cubic-bezier(.08,.74,.34,1), opacity .5s .5s;
 }
 
-.card-leave-active {
+.card-leave-to {
   opacity: 0;
-  transform: scale(1.5) translateY(-200px);
+  transform: translateX(-106px) translateY(-300px) scale(1.5);
   border: solid 6px white;
 }

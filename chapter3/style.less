@@ -278,13 +278,9 @@ body {
   pointer-events: none;
 
   .cards {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
     @media (max-width: 1200px) {
       transform: scale(.7);
-      height: 180px;
+      height: 208px;
     }
   }
 }
@@ -303,17 +299,13 @@ body {
   padding: 12px;
   box-sizing: border-box;
   text-align: center;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   align-items: stretch;
-  flex: auto 0 0;
   cursor: pointer;
   position: relative;
   top: 0;
-
-  &:not(:last-child) {
-    margin-right: 12px;
-  }
+  margin: 0 6px;
 
   .title,
   .separator {
