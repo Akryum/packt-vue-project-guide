@@ -39,10 +39,30 @@ Vue.component('castle-banners', {
 Vue.component('banner-bar', {
   template: '#banner',
   props: ['color', 'value'],
+  data () {
+    return {
+      height: 0,
+    }
+  },
   computed: {
-    height () {
+    targetHeight () {
       return 220 * this.value + 40
     },
+  },
+  watch: {
+    targetHeight (newValue, oldValue) {
+      const vm = this
+      new TWEEN.Tween({ value: oldValue })
+        .easing(TWEEN.Easing.Cubic.InOut)
+        .to({ value: newValue }, 500)
+        .onUpdate(function () {
+          vm.height = this.value.toFixed(0)
+        })
+        .start()
+    },
+  },
+  created () {
+    this.height = this.targetHeight
   },
 })
 

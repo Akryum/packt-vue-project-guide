@@ -82,6 +82,14 @@ window.addEventListener('resize', () => {
   state.worldRatio = getWorldRatio()
 })
 
+// Tween.js
+requestAnimationFrame(animate);
+
+function animate(time) {
+    requestAnimationFrame(animate);
+    TWEEN.update(time);
+}
+
 // Gameplay
 
 state.activeOverlay = 'player-turn'

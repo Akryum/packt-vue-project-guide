@@ -22,7 +22,7 @@ function bubbleStyle () {
 }
 
 Vue.component('food-bubble', {
-  template: `<div class="food-bubble" :style="bubbleStyle">
+  template: `<div class="food-bubble stat-bubble" :style="bubbleStyle">
     <img src="svg/food-bubble.svg" />
     <div class="counter">{{ value }}</div>
   </div>`,
@@ -36,7 +36,7 @@ Vue.component('food-bubble', {
 })
 
 Vue.component('health-bubble', {
-  template: `<div class="health-bubble" :style="bubbleStyle">
+  template: `<div class="health-bubble stat-bubble" :style="bubbleStyle">
     <img src="svg/health-bubble.svg" />
     <div class="counter">{{ value }}</div>
   </div>`,
