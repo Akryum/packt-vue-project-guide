@@ -7,8 +7,8 @@
    xmlns="http://www.w3.org/2000/svg"
    version="1.1"
    id="svg4370"
-   viewBox="0 0 760.00001 399.91997"
-   height="112.8663mm"
+   viewBox="0 0 760.00001 415.89791"
+   height="117.37563mm"
    width="214.48889mm">
   <defs
      id="defs4372" />
@@ -25,20 +25,20 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(5,-332.40222)"
+     transform="translate(-620.71429,-650.08752)"
      id="layer1">
     <g
-       id="g7401"
+       id="g7405"
        style="display:inline"
-       transform="translate(-20,-387.59781)">
+       transform="translate(-529.28571,-84.912475)">
       <path
-         style="fill:#d6715f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 15,1080 20,-259.99997 60,-60 140,-40 460,40 60,60 L 775,1080 664.68037,1115.3553 145.6352,1119.92 Z"
-         id="path5223" />
+         id="path5290"
+         d="m 1150,1080 20,-260 60,-60 165,-20 265,-5 170,25 60,60 20,260 -274.7058,70.8979 -293.2055,-11.5009 z"
+         style="fill:#dbc162;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
       <path
-         style="fill:#000000;fill-opacity:0.03921569;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 235,772.00005 390,23 70,-35.00002 -460,-40 -140,40 -60,60 z"
-         id="path5225" />
+         id="path5292"
+         d="m 1580,775 180,20.00002 70,-35.00002 -170,-25 -265,5 -165,20 -45,45 145,-20 z"
+         style="fill:#000000;fill-opacity:0.03921569;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     </g>
   </g>
 </svg>

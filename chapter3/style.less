@@ -6,6 +6,9 @@
 @card-special: #751b9b;
 @card-support: #1b6e9b;
 
+@victorious: #2a7db5;
+@defeated: #b52a2a;
+
 @world-ratio-raw: 1/1920;
 @world-ratio: @world-ratio-raw*100vw;
 
@@ -62,21 +65,21 @@ body {
     }
   }
 
-  &.player-1 {
+  &.player-0 {
     .turn-counter {
       .arrow {
         transform: rotate(180deg);
       }
     }
 
-    .player.p2 {
+    .player.p1 {
       opacity: .75;
       transform: scale(.9);
     }
   }
 
-  &.player-2 {
-    .player.p1 {
+  &.player-1 {
+    .player.p0 {
       opacity: .75;
       transform: scale(.9);
     }
@@ -215,7 +218,7 @@ body {
     }
   }
 
-  &.player-1 {
+  &.player-0 {
     left: 0;
 
     .ground {
@@ -223,7 +226,7 @@ body {
     }
   }
 
-  &.player-2 {
+  &.player-1 {
     right: 0;
 
     .ground {
@@ -313,7 +316,7 @@ body {
   }
 
   .title {
-    font-size: 32px;
+    font-size: 22px;
     margin-bottom: 12px;
   }
 
@@ -329,7 +332,7 @@ body {
     align-items: center;
     justify-content: center;
     color: fade(white, 80%);
-    font-size: 22px;
+    font-size: 20px;
 
     b {
       color: white;
@@ -394,5 +397,23 @@ body {
   .card {
     margin: 32px auto 0;
     pointer-events: none;
+  }
+}
+
+.player-result {
+  margin: 42px 0;
+  padding: 32px;
+  background: fade(white, 75%);
+
+  &.victorious {
+    span {
+      color: @victorious;
+    }
+  }
+
+  &.defeated {
+    span {
+      color: @defeated;
+    }
   }
 }

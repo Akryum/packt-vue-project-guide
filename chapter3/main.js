@@ -5,10 +5,10 @@ new Vue({
   el: '#app',
 
   template: `<div id="#app" :class="cssClass">
-    <top-bar :turn="turn" :player="currentPlayerId" />
+    <top-bar :turn="turn" :current-player="currentPlayerIndex" :players="players" />
 
     <div class="world">
-      <castle v-for="player in 2" :player="player" />
+      <castle v-for="(player, index) in players" :player="player" :index="index" />
       <cloud v-for="index in 10" :index="(index - 1) % 5 + 1" />
       <div class="ocean" />
     </div>
@@ -23,14 +23,22 @@ new Vue({
 
     <transition name="zoom" mode="out-in">
       <overlay v-if="activeOverlay === 'player-turn'" :key="activeOverlay" @close="handlePlayerTurnClose">
-        <div class="big" v-if="currentPlayer.skipTurn">Player {{ currentPlayerId }} skips his turn!</div>
-        <div class="big" v-else>Player {{ currentPlayerId }} turn</div>
+        <div class="big" v-if="currentPlayer.skipTurn">{{ currentPlayer.name }},<br>your turn is skipped!</div>
+        <div class="big" v-else>{{ currentPlayer.name }},<br>your turn has come!</div>
         <div>Tap to continue</div>
       </overlay>
 
       <overlay v-else-if="activeOverlay === 'last-play'" :key="activeOverlay" @close="handleLastPlayClose">
-        <div>Player {{ currentOpponentId }} just played:</div>
-        <card :card="lastPlayedCard" />
+        <div v-if="currentOpponent.skippedTurn">{{ currentOpponent.name }} turn was skipped!</div>
+        <template v-else>
+          <div>{{ currentOpponent.name }} just played:</div>
+          <card :card="lastPlayedCard" />
+        </template>
+      </overlay>
+
+      <overlay v-else-if="activeOverlay === 'game-over'" :key="activeOverlay" @close="handleGameOverClose">
+        <div class="big">Game Over</div>
+        <player-result v-for="player in players" :player="player" />
       </overlay>
     </transition>
   </div>`,
@@ -66,14 +74,17 @@ new Vue({
       newTurn()
     },
 
+    handleGameOverClose () {
+      document.location.reload()
+    },
+
     handleLeaveTransitionEnd () {
       applyCard()
     },
   },
 
   mounted () {
-    // Draw hands
-    forEachPlayer(drawInitialHand)
+    beginGame()
   },
 })
 
@@ -86,35 +97,16 @@ window.addEventListener('resize', () => {
 requestAnimationFrame(animate);
 
 function animate(time) {
-    requestAnimationFrame(animate);
-    TWEEN.update(time);
+  requestAnimationFrame(animate);
+  TWEEN.update(time);
 }
 
 // Gameplay
 
 state.activeOverlay = 'player-turn'
 
-function drawCard () {
-  const choice = Math.round(Math.random() * (state.pileCount - 1))
-  let	accumulation = 0
-  for (let k in state.pile) {
-    accumulation += state.pile[k]
-    if (choice <= accumulation) {
-      // Draw the card from the pile
-      state.pile[k] --
-      return {
-        id: k,
-        uid: cardUid++,
-        data: cards[k],
-      }
-    }
-  }
-}
-
-function drawInitialHand (player) {
-  for (let i = 0; i < handSize; i++) {
-    player.hand.push(drawCard())
-  }
+function beginGame () {
+  state.players.forEach(drawInitialHand)
 }
 
 function playCard (card) {
@@ -126,33 +118,22 @@ function playCard (card) {
     const index = state.currentPlayer.hand.indexOf(card)
     state.currentPlayer.hand.splice(index, 1)
 
-    // Add back the card to the pile
-    addCardToPile(card.id)
-  }
-}
-
-function addCardToPile (cardId) {
-  if (typeof state.pile[cardId] === 'number') {
-    state.pile[cardId] ++
-  } else {
-    state.pile[cardId] = 1
+    // Add the card to the discard pile
+    addCardToPile(state.discardPile, card.id)
   }
 }
 
 function applyCard () {
   const card = currentPlayingCard
-  // Apply card effect
-  state.currentPlayer.lastPlayedCardId = card.id
-  card.data.play(state.currentPlayer, state.currentOpponent)
 
-  // Check if the stats (health, food) are not outside the boundaries
-  forEachPlayer(checkStatsBounds)
+  applyCardEffect(card)
 
+  // Wait a bit for the animations to complete
   setTimeout(() => {
     // Check if the players are dead
-    forEachPlayer(checkPlayerLost)
+    state.players.forEach(checkPlayerLost)
 
-    if (state.deadPlayers.length !== 0) {
+    if (isOnePlayerDead()) {
       endGame()
     } else {
       nextTurn()
@@ -160,39 +141,30 @@ function applyCard () {
   }, 500)
 }
 
-function checkStatsBounds (player) {
-  // Health
-  if (player.health < 0) {
-    player.health = 0
-  } else if (player.health > maxHealth) {
-    player.health = maxHealth
-  }
-
-  // Food
-  if (player.food < 0) {
-    player.food = 0
-  } else if (player.food > maxFood) {
-    player.food = maxFood
-  }
-}
-
-function checkPlayerLost (player) {
-  player.dead = (player.health === 0 || player.food === 0)
-}
-
 function nextTurn () {
   state.turn ++
-  state.currentPlayerId = state.currentOpponentId
+  state.currentPlayerIndex = state.currentOpponentId
   state.activeOverlay = 'player-turn'
 }
 
 function newTurn () {
   state.activeOverlay = null
   if (state.currentPlayer.skipTurn) {
-    // Skip turn
-    state.currentPlayer.skipTurn = false
-    nextTurn()
-  } else if (state.turn > 2) {
+    skipTurn()
+  } else {
+    startTurn()
+  }
+}
+
+function skipTurn () {
+  state.currentPlayer.skippedTurn = true
+  state.currentPlayer.skipTurn = false
+  nextTurn()
+}
+
+function startTurn () {
+  state.currentPlayer.skippedTurn = false
+  if (state.turn > 2) {
     // Draw new card
     setTimeout(() => {
       state.currentPlayer.hand.push(drawCard())
@@ -204,5 +176,5 @@ function newTurn () {
 }
 
 function endGame () {
-  state.ended = true
+  state.activeOverlay = 'game-over'
 }

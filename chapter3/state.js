@@ -10,47 +10,41 @@ var state = {
   // World
   worldRatio: getWorldRatio(),
   // Game
-  ended: false,
   turn: 1,
-  players: {
-    1: {
+  players: [
+    {
+      name: 'Anne of Cleves',
       food: 10,
       health: 10,
       skipTurn: false,
+      skippedTurn: false,
       hand: [],
       lastPlayedCardId: null,
       dead: false,
     },
-    2: {
+    {
+      name: 'William the Bald',
       food: 10,
       health: 10,
       skipTurn: false,
+      skippedTurn: false,
       hand: [],
       lastPlayedCardId: null,
       dead: false,
     },
-  },
-  currentPlayerId: 1,
+  ],
+  currentPlayerIndex: 0,
   get currentOpponentId () {
-    return state.currentPlayerId === 1 ? 2 : 1
+    return state.currentPlayerIndex === 0 ? 1 : 0
   },
   get currentPlayer () {
-    return state.players[state.currentPlayerId]
+    return state.players[state.currentPlayerIndex]
   },
   get currentOpponent () {
     return state.players[state.currentOpponentId]
   },
   get currentHand () {
     return state.currentPlayer.hand
-  },
-  get deadPlayers () {
-    const list = []
-    forEachPlayer(player => {
-      if (player.dead) {
-        list.push(player)
-      }
-    })
-    return list
   },
   pile,
   get pileCount () {
@@ -60,5 +54,6 @@ var state = {
     }
     return result
   },
+  discardPile: {},
   canPlay: false,
 }

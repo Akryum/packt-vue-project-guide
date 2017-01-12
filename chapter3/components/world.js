@@ -1,10 +1,10 @@
 Vue.component('castle', {
-  template: `<div class="castle" :class="'player-' + player">
-    <img class="building" :src="'svg/castle' + player + '.svg'" />
-    <img class="ground" :src="'svg/ground' + player + '.svg'" />
+  template: `<div class="castle" :class="'player-' + index">
+    <img class="building" :src="'svg/castle' + index + '.svg'" />
+    <img class="ground" :src="'svg/ground' + index + '.svg'" />
     <castle-banners :player="player" />
   </div>`,
-  props: ['player'],
+  props: ['player', 'index'],
 })
 
 Vue.component('castle-banners', {
@@ -12,26 +12,20 @@ Vue.component('castle-banners', {
     <!-- Food -->
     <img class="food-icon" src="svg/food-icon.svg" />
     <banner-bar class="food-bar" color="#288339" :value="foodRatio" />
-    <food-bubble :value="food" />
+    <food-bubble :value="player.food" />
 
     <!-- Health -->
     <img class="health-icon" src="svg/health-icon.svg" />
     <banner-bar class="health-bar" color="#9b2e2e" :value="healthRatio" />
-    <health-bubble :value="health" />
+    <health-bubble :value="player.health" />
   </div>`,
   props: ['player'],
   computed: {
-    food () {
-      return state.players[this.player].food
-    },
     foodRatio () {
-      return this.food / maxFood
-    },
-    health () {
-      return state.players[this.player].health
+      return this.player.food / maxFood
     },
     healthRatio () {
-      return this.health / maxHealth
+      return this.player.health / maxHealth
     },
   }
 })

@@ -1,17 +1,17 @@
 Vue.component('top-bar', {
-  template: `<div class="top-bar" :class="'player-' + player">
-    <div class="player p1">Player 1</div>
+  template: `<div class="top-bar" :class="'player-' + currentPlayer">
+    <div class="player p0">{{ players[0].name }}</div>
     <div class="turn-counter">
       <img class="arrow" src="svg/turn.svg" />
       <div class="turn">Turn {{ turn }}</div>
     </div>
-    <div class="player p2">Player 2</div>
+    <div class="player p1">{{ players[1].name }}</div>
   </div>`,
-  props: ['turn', 'player'],
+  props: ['turn', 'currentPlayer', 'players'],
   computed: {
     opponent () {
       return this.player === 1 ? 2 : 1
-    }
+    },
   }
 })
 
@@ -96,6 +96,24 @@ Vue.component('overlay', {
       <slot></slot>
     </div>
   </div>`,
+  methods: {
+    handleClick () {
+      this.$emit('close')
+    },
+  },
+})
+
+Vue.component('player-result', {
+  template: `<div class="player-result" :class="result">
+    <span class="name">{{ player.name }}</span> is
+    <span class="result">{{ result }}</span>
+  </div>`,
+  props: ['player'],
+  computed: {
+    result () {
+      return this.player.dead ? 'defeated' : 'victorious'
+    },
+  },
   methods: {
     handleClick () {
       this.$emit('close')
