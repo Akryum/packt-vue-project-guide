@@ -155,9 +155,10 @@ let cards = [
 ]
 
 cards = cards.reduce((map, card) => {
+  card.description = card.description.replace(/\d+\s+<b>.*?<\/b>/gi, '<span class="effect">$&</span>')
   card.description = card.description.replace(/<b>(.*?)<\/b>/gi, (match, p1) => {
     const id = p1.toLowerCase()
-    return `<b class="keyword ${id}"><img src="svg/${id}.svg" />${p1}</b>`
+    return `<b class="keyword ${id}">${p1} <img src="svg/${id}.svg"/></b>`
   })
   map[card.id] = card
   return map
