@@ -110,10 +110,10 @@ let cards = [
     id: 'fireball',
     type: 'special',
     title: 'Fireball',
-    description: 'Take 2 <b>Damage</b><br>Deal 5 <b>Damage</b><br>Skip your turn',
+    description: 'Take 3 <b>Damage</b><br>Deal 5 <b>Damage</b><br>Skip your turn',
     note: '&#171;Magic isn\'t for kids. You fool.&#187;',
     play (player, opponent) {
-      player.health -= 2
+      player.health -= 3
       player.skipTurn = true
       opponent.health -= 5
     },
