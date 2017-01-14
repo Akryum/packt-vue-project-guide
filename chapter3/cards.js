@@ -122,10 +122,10 @@ let cards = [
     id: 'chapel',
     type: 'special',
     title: 'Chapel',
-    description: 'Skip your turn',
+    description: 'Do nothing',
     note: 'Pray in the chapel, and hope someone will listen.',
     play (player, opponent) {
-      player.skipTurn = true
+      // Nothing happens...
     },
   },
   {
