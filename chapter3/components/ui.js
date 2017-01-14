@@ -54,6 +54,7 @@ Vue.component('card', {
     <div class="title">{{ card.title }}</div>
     <img class="separator" src="svg/card-separator.svg" />
     <div class="description"><div v-html="card.description"></div></div>
+    <div class="note" v-if="card.note"><div v-html="card.note"></div></div>
   </div>`,
   props: ['card'],
   computed: {

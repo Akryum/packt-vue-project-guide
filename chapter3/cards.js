@@ -1,5 +1,16 @@
 let cards = [
   {
+    id: 'pikemen',
+    type: 'attack',
+    title: 'Pikemen',
+    description: 'Spend 1 <b>Food</b><br>Deal 1 <b>Damage</b>',
+    note: 'Send your disposable men to a certain death.',
+    play (player, opponent) {
+      player.food -= 1
+      opponent.health -= 1
+    },
+  },
+  {
     id: 'catapult',
     type: 'attack',
     title: 'Catapult',
@@ -13,21 +24,44 @@ let cards = [
     id: 'trebuchet',
     type: 'attack',
     title: 'Trebuchet',
-    description: 'Spend 1 <b>Food</b><br>Take 1 <b>Damage</b><br>Deal 4 <b>Damage</b>',
+    description: 'Spend 3 <b>Food</b><br>Take 1 <b>Damage</b><br>Deal 4 <b>Damage</b>',
+    note: ' &#171;The finest machine Man ever created!&#187;',
     play (player, opponent) {
-      player.food -= 1
+      player.food -= 3
       player.health -= 1
       opponent.health -= 4
+    },
+  },
+  {
+    id: 'archers',
+    type: 'attack',
+    title: 'Archers',
+    description: 'Spend 3 <b>Food</b><br>Deal 3 <b>Damage</b>',
+    note: '&#171;Ready your bows! Nock! Mark! Draw! Loose!&#187;',
+    play (player, opponent) {
+      player.food -= 3
+      opponent.health -= 3
+    },
+  },
+  {
+    id: 'knighthood',
+    type: 'attack',
+    title: 'Knighthood',
+    description: 'Spend 7 <b>Food</b><br>Deal 5 <b>Damage</b>',
+    note: 'Knights may be even more expansive than their mount.',
+    play (player, opponent) {
+      player.food -= 7
+      opponent.health -= 5
     },
   },
   {
     id: 'repair',
     type: 'support',
     title: 'Repair',
-    description: 'Skip your next turn<br>Repair 4 <b>Damage</b>',
+    description: 'Repair 5 <b>Damage</b><br>Skip your next turn',
     play (player, opponent) {
       player.skipTurn = true
-      player.health += 4
+      player.health += 5
     }
   },
   {
@@ -35,6 +69,7 @@ let cards = [
     type: 'support',
     title: 'Quick Repair',
     description: 'Spend 3 <b>Food</b><br>Repair 3 <b>Damage</b>',
+    note: 'This is not without consequences on the moral and energy!',
     play (player, opponent) {
       player.food -= 3
       player.health += 3
@@ -44,17 +79,28 @@ let cards = [
     id: 'farm',
     type: 'support',
     title: 'Farm',
-    description: 'Skip your next turn<br>Gather 4 <b>Food</b>',
+    description: 'Gather 5 <b>Food</b><br>Skip your next turn',
+    note: '&#171;One should be patient to grow crops.&#187;',
     play (player, opponent) {
       player.skipTurn = true
-      player.food += 4
+      player.food += 5
     },
+  },
+  {
+    id: 'granary',
+    type: 'support',
+    title: 'Granary',
+    description: 'Gather 2 <b>Food</b>',
+    play (player, opponent) {
+      player.food += 2
+    }
   },
   {
     id: 'poison',
     type: 'special',
-    title: 'Poison the Granary',
+    title: 'Poison',
     description: 'Spend 1 <b>Food</b><br>Your opponent loose 3 <b>Food</b>',
+    note: 'Send someone you trust poison the enemy granary.',
     play (player, opponent) {
       player.food -= 1
       opponent.food -= 3
@@ -64,26 +110,72 @@ let cards = [
     id: 'fireball',
     type: 'special',
     title: 'Fireball',
-    description: 'Take 1 <b>Damage</b><br>Skip your turn<br>Deal 4 <b>Damage</b>',
+    description: 'Take 2 <b>Damage</b><br>Deal 5 <b>Damage</b><br>Skip your turn',
+    note: '&#171;Magic isn\'t for kids. You fool.&#187;',
     play (player, opponent) {
-      player.health -= 1
+      player.health -= 2
       player.skipTurn = true
-      opponent.health -= 4
+      opponent.health -= 5
+    },
+  },
+  {
+    id: 'chapel',
+    type: 'special',
+    title: 'Chapel',
+    description: 'Skip your turn',
+    note: 'Pray in the chapel, and hope someone will listen.',
+    play (player, opponent) {
+      player.skipTurn = true
+    },
+  },
+  {
+    id: 'curse',
+    type: 'special',
+    title: 'Curse',
+    description: 'Everyone:<br>Loose 3 <b>Food</b><br>Take 3 <b>Damage</b>',
+    play (player, opponent) {
+      player.food -= 3
+      player.health -= 3
+      opponent.food -= 3
+      opponent.health -= 3
+    },
+  },
+  {
+    id: 'miracle',
+    type: 'special',
+    title: 'Miracle',
+    description: 'Everyone:<br>Gather 3 <b>Food</b><br>Repair 3 <b>Damage</b>',
+    play (player, opponent) {
+      player.food += 3
+      player.health += 3
+      opponent.food += 3
+      opponent.health += 3
     },
   },
 ]
 
 cards = cards.reduce((map, card) => {
+  card.description = card.description.replace(/<b>(.*?)<\/b>/gi, (match, p1) => {
+    const id = p1.toLowerCase()
+    return `<b class="keyword ${id}"><img src="svg/${id}.svg" />${p1}</b>`
+  })
   map[card.id] = card
   return map
 }, {})
 
 let pile = {
-  catapult: 6,
-  trebuchet: 4,
+  pikemen: 4,
+  catapult: 4,
+  trebuchet: 3,
+  archers: 3,
+  knighthood: 3,
+  'quick-repair': 4,
+  granary: 4,
   repair: 3,
-  'quick-repair': 2,
   farm: 3,
   poison: 2,
   fireball: 2,
+  chapel: 2,
+  curse: 1,
+  miracle: 1,
 }
