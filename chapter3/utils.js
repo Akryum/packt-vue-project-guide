@@ -9,18 +9,18 @@ function getWorldRatio () {
 // Pile
 
 function drawCard () {
-  if (state.pileCount === 0) {
+  if (state.drawPileCount === 0) {
     refillPile()
   }
 
-  const choice = Math.round(Math.random() * (state.pileCount - 1)) + 1
+  const choice = Math.round(Math.random() * (state.drawPileCount - 1)) + 1
 
   let	accumulation = 0
-  for (let k in state.pile) {
-    accumulation += state.pile[k]
+  for (let k in state.drawPile) {
+    accumulation += state.drawPile[k]
     if (choice <= accumulation) {
       // Draw the card from the pile
-      state.pile[k] --
+      state.drawPile[k] --
       return {
         id: k,
         uid: cardUid++,
@@ -45,7 +45,7 @@ function addCardToPile (pile, cardId) {
 }
 
 function refillPile () {
-  Object.assign(state.pile, state.discardPile)
+  Object.assign(state.drawPile, state.discardPile)
   state.discardPile = {}
 }
 
