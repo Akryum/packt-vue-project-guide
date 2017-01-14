@@ -240,19 +240,13 @@ body {
   }
 }
 
-.cloud {
-  position: absolute;
-  animation: cloud infinite;
-  animation-fill-mode: both;
+.clouds {
+  position: relative;
+  z-index: 5;
 }
 
-@keyframes cloud{
-  from {
-    transform: translateX(-150vw);
-  }
-  to {
-    transform: translateX(150vw);
-  }
+.cloud {
+  position: absolute;
 }
 
 .ocean {

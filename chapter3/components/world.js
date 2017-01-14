@@ -60,24 +60,68 @@ Vue.component('banner-bar', {
   },
 })
 
+const cloudAnimationDurations = {
+  min: 5000,
+  max: 100000,
+}
+
 Vue.component('cloud', {
   template: `<div class="cloud" :class="'cloud-' + index" :style="style">
-    <img :src="'svg/cloud' + index + '.svg'" />
+    <img :src="'svg/cloud' + index + '.svg'" @load="initPosition" />
   </div>`,
   props: ['index'],
   data () {
-    // Random animation speed
-    const animationDuration = Math.random() * 120 + 120
-
     return {
       style: {
-        animationDuration: animationDuration + 's',
-        // Random animation midway starting point
-        animationDelay: - Math.random() * 100 * animationDuration + 's',
-        // Random position
-        top: Math.random() * (window.innerHeight-300) + 115 + 'px',
-        left: Math.random() * window.innerWidth + 'px',
+        transform: 'none',
+        zIndex: 0,
       },
     }
+  },
+  methods: {
+    setPosition (left, top) {
+      // Use transform for better performance
+      this.style.transform = `translate(${left}px, ${top}px)`
+    },
+
+    initPosition () {
+      // Element width
+      const width = this.$el.clientWidth
+      this.setPosition(-width, 0)
+    },
+
+    startAnimation (delay = 0) {
+      const vm = this
+
+      // Element width
+      const width = this.$el.clientWidth
+
+      // Random animation duration
+      const { min, max } = cloudAnimationDurations
+      const animationDuration = Math.random() * (max - min) + min
+
+      // Bing faster clouds forward
+      this.style.zIndex = max - animationDuration
+
+      // Random position
+      const top = Math.random() * (window.innerHeight * 0.4) + 115
+
+      new TWEEN.Tween({ value: -width })
+        .to({ value: window.innerWidth }, animationDuration)
+        .delay(delay)
+        .onUpdate(function () {
+          vm.setPosition(this.value, top)
+        })
+        .onComplete(() => {
+          // With a random delay
+          this.startAnimation(Math.random() * 10000)
+        })
+        .start()
+    },
+  },
+  mounted () {
+    // We start the animation with a negative delay
+    // So it begins midway
+    this.startAnimation(-Math.random() * cloudAnimationDurations.min)
   },
 })

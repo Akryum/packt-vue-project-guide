@@ -4,7 +4,7 @@
 }
 
 .fade-enter,
-.fade-leave-active {
+.fade-leave-to {
   opacity: 0;
 }
 
@@ -14,7 +14,7 @@
 }
 
 .zoom-enter,
-.zoom-leave-active {
+.zoom-leave-to {
   opacity: 0;
   transform: scale(.7);
 }
@@ -27,7 +27,7 @@
 }
 
 .hand-enter,
-.hand-leave-active {
+.hand-leave-to {
   opacity: 0;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .hand-enter .wrapper,
-.hand-leave-active .wrapper {
+.hand-leave-to .wrapper {
   transform: rotateX(90deg);
 }
 
@@ -48,7 +48,7 @@
 }
 
 .hand-enter .card,
-.hand-leave-active .card {
+.hand-leave-to .card {
   margin: 0 -100px;
 }
 

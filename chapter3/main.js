@@ -9,7 +9,9 @@ new Vue({
 
     <div class="world">
       <castle v-for="(player, index) in players" :player="player" :index="index" />
-      <cloud v-for="index in 10" :index="(index - 1) % 5 + 1" />
+      <div class="clouds">
+        <cloud v-for="index in 10" :index="(index - 1) % 5 + 1" />
+      </div>
       <div class="ocean" />
     </div>
 
@@ -22,23 +24,8 @@ new Vue({
     </transition>
 
     <transition name="zoom" mode="out-in">
-      <overlay v-if="activeOverlay === 'player-turn'" :key="activeOverlay" @close="handlePlayerTurnClose">
-        <div class="big" v-if="currentPlayer.skipTurn">{{ currentPlayer.name }},<br>your turn is skipped!</div>
-        <div class="big" v-else>{{ currentPlayer.name }},<br>your turn has come!</div>
-        <div>Tap to continue</div>
-      </overlay>
-
-      <overlay v-else-if="activeOverlay === 'last-play'" :key="activeOverlay" @close="handleLastPlayClose">
-        <div v-if="currentOpponent.skippedTurn">{{ currentOpponent.name }} turn was skipped!</div>
-        <template v-else>
-          <div>{{ currentOpponent.name }} just played:</div>
-          <card :card="lastPlayedCard" />
-        </template>
-      </overlay>
-
-      <overlay v-else-if="activeOverlay === 'game-over'" :key="activeOverlay" @close="handleGameOverClose">
-        <div class="big">Game Over</div>
-        <player-result v-for="player in players" :player="player" />
+      <overlay v-if="activeOverlay" :key="activeOverlay" @close="handleOverlayClose">
+        <component :is="'overlay-' + activeOverlay" :player="currentPlayer" :opponent="currentOpponent" :players="players" />
       </overlay>
     </transition>
   </div>`,
@@ -46,10 +33,6 @@ new Vue({
   data: state,
 
   computed: {
-    lastPlayedCard () {
-      return cards[this.currentOpponent.lastPlayedCardId]
-    },
-
     cssClass () {
       return {
         'can-play': this.canPlay,
@@ -62,20 +45,8 @@ new Vue({
       playCard(card)
     },
 
-    handlePlayerTurnClose () {
-      if (this.turn > 1) {
-        this.activeOverlay = 'last-play'
-      } else {
-        newTurn()
-      }
-    },
-
-    handleLastPlayClose () {
-      newTurn()
-    },
-
-    handleGameOverClose () {
-      document.location.reload()
+    handleOverlayClose () {
+      overlayCloseHandlers[this.activeOverlay]()
     },
 
     handleLeaveTransitionEnd () {
@@ -87,6 +58,24 @@ new Vue({
     beginGame()
   },
 })
+
+var overlayCloseHandlers = {
+  'player-turn' () {
+    if (state.turn > 1) {
+      state.activeOverlay = 'last-play'
+    } else {
+      newTurn()
+    }
+  },
+
+  'last-play' () {
+    newTurn()
+  },
+
+  'game-over' () {
+    document.location.reload()
+  },
+}
 
 // Window resize handling
 window.addEventListener('resize', () => {
