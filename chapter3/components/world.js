@@ -101,7 +101,7 @@ Vue.component('cloud', {
       const animationDuration = Math.random() * (max - min) + min
 
       // Bing faster clouds forward
-      this.style.zIndex = max - animationDuration
+      this.style.zIndex = Math.round(max - animationDuration)
 
       // Random position
       const top = Math.random() * (window.innerHeight * 0.4) + 115
