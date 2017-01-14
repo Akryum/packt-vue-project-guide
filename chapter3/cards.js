@@ -99,7 +99,7 @@ let cards = [
     id: 'poison',
     type: 'special',
     title: 'Poison',
-    description: 'Spend 1 <b>Food</b><br>Your opponent loose 3 <b>Food</b>',
+    description: 'Spend 1 <b>Food</b><br>Your opponent lose 3 <b>Food</b>',
     note: 'Send someone you trust poison the enemy granary.',
     play (player, opponent) {
       player.food -= 1
@@ -132,7 +132,7 @@ let cards = [
     id: 'curse',
     type: 'special',
     title: 'Curse',
-    description: 'Everyone:<br>Loose 3 <b>Food</b><br>Take 3 <b>Damage</b>',
+    description: 'Everyone:<br>Lose 3 <b>Food</b><br>Take 3 <b>Damage</b>',
     play (player, opponent) {
       player.food -= 3
       player.health -= 3
