@@ -12,7 +12,7 @@ new Vue({
       <div class="clouds">
         <cloud v-for="index in 10" :index="(index - 1) % 5 + 1" />
       </div>
-      <div class="ocean" />
+      <div class="land" />
     </div>
 
     <transition name="hand">

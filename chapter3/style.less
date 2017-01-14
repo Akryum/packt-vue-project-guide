@@ -1,6 +1,6 @@
 @bg: #6eabff;
 @primary: #356cdf;
-@ocean-color: #003580;
+@land-color: #9fc592;
 
 @card-attack: #9b1b1b;
 @card-special: #751b9b;
@@ -249,8 +249,8 @@ body {
   position: absolute;
 }
 
-.ocean {
-  background: @ocean-color;
+.land {
+  background: @land-color;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -270,7 +270,7 @@ body {
   justify-content: center;
   padding: 12px 0;
   background: fade(black, 70%);
-  background: linear-gradient(to bottom,  transparent 0%, fade(black, 40%) 100%);
+  background: linear-gradient(to bottom,  transparent 0%, fade(white, 40%) 100%);
   perspective: 1000px;
   pointer-events: none;
 
@@ -325,12 +325,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: fade(white, 80%);
     font-size: 20px;
     color: white;
 
-    b {
-      color: white;
     .keyword {
       img {
         opacity: .75;
