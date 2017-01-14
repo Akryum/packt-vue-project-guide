@@ -61,8 +61,8 @@ Vue.component('banner-bar', {
 })
 
 const cloudAnimationDurations = {
-  min: 5000,
-  max: 100000,
+  min: 10000,
+  max: 50000,
 }
 
 Vue.component('cloud', {
