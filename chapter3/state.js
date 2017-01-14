@@ -33,7 +33,7 @@ var state = {
       dead: false,
     },
   ],
-  currentPlayerIndex: 0,
+  currentPlayerIndex: Math.round(Math.random()),
   get currentOpponentId () {
     return state.currentPlayerIndex === 0 ? 1 : 0
   },
