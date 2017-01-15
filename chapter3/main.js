@@ -5,7 +5,7 @@ new Vue({
   el: '#app',
 
   template: `<div id="#app" :class="cssClass">
-    <top-bar :turn="turn" :current-player="currentPlayerIndex" :players="players" />
+    <top-bar :turn="turn" :current-player-index="currentPlayerIndex" :players="players" />
 
     <div class="world">
       <castle v-for="(player, index) in players" :player="player" :index="index" />

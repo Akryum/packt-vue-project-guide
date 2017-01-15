@@ -1,5 +1,5 @@
 Vue.component('top-bar', {
-  template: `<div class="top-bar" :class="'player-' + currentPlayer">
+  template: `<div class="top-bar" :class="'player-' + currentPlayerIndex">
     <div class="player p0">{{ players[0].name }}</div>
     <div class="turn-counter">
       <img class="arrow" src="svg/turn.svg" />
@@ -7,12 +7,10 @@ Vue.component('top-bar', {
     </div>
     <div class="player p1">{{ players[1].name }}</div>
   </div>`,
-  props: ['turn', 'currentPlayer', 'players'],
-  computed: {
-    opponent () {
-      return this.player === 1 ? 2 : 1
-    },
-  }
+  props: ['players', 'currentPlayerIndex', 'turn'],
+  created () {
+    console.log(this.players, this.currentPlayerIndex, this.turn)
+  },
 })
 
 function bubbleStyle () {
