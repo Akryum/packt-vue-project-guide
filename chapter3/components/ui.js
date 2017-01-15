@@ -48,20 +48,13 @@ Vue.component('health-bubble', {
 })
 
 Vue.component('card', {
-  template: `<div class="card" :class="cssClass" @click="handleClick">
+  template: `<div class="card" :class="'type-' + card.type" @click="handleClick">
     <div class="title">{{ card.title }}</div>
     <img class="separator" src="svg/card-separator.svg" />
     <div class="description"><div v-html="card.description"></div></div>
     <div class="note" v-if="card.note"><div v-html="card.note"></div></div>
   </div>`,
   props: ['card'],
-  computed: {
-    cssClass () {
-      return [
-        `type-${this.card.type}`,
-      ]
-    },
-  },
   methods: {
     handleClick () {
       this.$emit('play')
