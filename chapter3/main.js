@@ -16,7 +16,7 @@ new Vue({
     </div>
 
     <transition name="hand">
-      <hand v-if="!activeOverlay" :cards="currentHand" @play="handlePlayCard" @leave-transition-end="handleLeaveTransitionEnd" />
+      <hand v-if="!activeOverlay" :cards="currentHand" @play="handlePlayCard" @card-leave-end="handleCardLeaveEnd" />
     </transition>
 
     <transition name="fade">
@@ -49,7 +49,7 @@ new Vue({
       overlayCloseHandlers[this.activeOverlay]()
     },
 
-    handleLeaveTransitionEnd () {
+    handleCardLeaveEnd () {
       applyCard()
     },
   },

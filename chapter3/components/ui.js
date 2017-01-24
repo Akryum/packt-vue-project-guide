@@ -77,7 +77,7 @@ Vue.component('hand', {
     },
 
     handleLeaveTransitionEnd () {
-      this.$emit('leave-transition-end')
+      this.$emit('card-leave-end')
     },
   },
 })
