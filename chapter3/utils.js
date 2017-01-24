@@ -24,7 +24,7 @@ function drawCard () {
       return {
         id: k,
         uid: cardUid++,
-        data: cards[k],
+        def: cards[k],
       }
     }
   }
@@ -53,7 +53,7 @@ function refillPile () {
 
 function applyCardEffect (card) {
   state.currentPlayer.lastPlayedCardId = card.id
-  card.data.play(state.currentPlayer, state.currentOpponent)
+  card.def.play(state.currentPlayer, state.currentOpponent)
   // Check if the stats (health, food) are not outside the boundaries
   state.players.forEach(checkStatsBounds)
 }

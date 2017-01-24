@@ -48,13 +48,13 @@ Vue.component('health-bubble', {
 })
 
 Vue.component('card', {
-  template: `<div class="card" :class="'type-' + card.type" @click="play">
-    <div class="title">{{ card.title }}</div>
+  template: `<div class="card" :class="'type-' + def.type" @click="play">
+    <div class="title">{{ def.title }}</div>
     <img class="separator" src="svg/card-separator.svg" />
-    <div class="description"><div v-html="card.description"></div></div>
-    <div class="note" v-if="card.note"><div v-html="card.note"></div></div>
+    <div class="description"><div v-html="def.description"></div></div>
+    <div class="note" v-if="def.note"><div v-html="def.note"></div></div>
   </div>`,
-  props: ['card'],
+  props: ['def'],
   methods: {
     play () {
       this.$emit('play')
@@ -66,7 +66,7 @@ Vue.component('hand', {
   template: `<div class="hand">
     <div class="wrapper">
       <transition-group name="card" tag="div" class="cards" @after-leave="handleLeaveTransitionEnd">
-        <card v-for="card of cards" :key="card.uid" :card="card.data" @play="handlePlay(card)" />
+        <card v-for="card of cards" :key="card.uid" :def="card.def" @play="handlePlay(card)" />
       </transition-group>
     </div>
   </div>`,
