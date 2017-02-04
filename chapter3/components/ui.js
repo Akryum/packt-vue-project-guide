@@ -109,7 +109,7 @@ Vue.component('overlay-last-play', {
     <div v-if="opponent.skippedTurn">{{ opponent.name }} turn was skipped!</div>
     <template v-else>
       <div>{{ opponent.name }} just played:</div>
-      <card :card="lastPlayedCard" />
+      <card :def="lastPlayedCard" />
     </template>
   </div>`,
   props: ['player', 'opponent'],

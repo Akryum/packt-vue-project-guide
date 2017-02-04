@@ -104,7 +104,7 @@ Vue.component('cloud', {
       this.style.zIndex = Math.round(max - animationDuration)
 
       // Random position
-      const top = Math.random() * (window.innerHeight * 0.4) + 115
+      const top = Math.random() * (window.innerHeight * 0.3)
 
       new TWEEN.Tween({ value: -width })
         .to({ value: window.innerWidth }, animationDuration)

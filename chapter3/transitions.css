@@ -44,7 +44,7 @@
 
 .hand-enter-active .card,
 .hand-leave-active .card {
-  transition: all .8s cubic-bezier(.08,.74,.34,1);
+  transition: margin .8s cubic-bezier(.08,.74,.34,1);
 }
 
 .hand-enter .card,
