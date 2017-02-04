@@ -16,7 +16,7 @@ new Vue({
     </div>
 
     <transition name="hand">
-      <hand v-if="!activeOverlay" :cards="currentHand" @play="handlePlayCard" @card-leave-end="handleCardLeaveEnd" />
+      <hand v-if="!activeOverlay" :cards="currentHand" @card-play="handlePlayCard" @card-leave-end="handleCardLeaveEnd" />
     </transition>
 
     <transition name="fade">

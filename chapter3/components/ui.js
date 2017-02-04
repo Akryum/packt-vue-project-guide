@@ -73,7 +73,7 @@ Vue.component('hand', {
   props: ['cards'],
   methods: {
     handlePlay (card) {
-      this.$emit('play', card)
+      this.$emit('card-play', card)
     },
 
     handleLeaveTransitionEnd () {
