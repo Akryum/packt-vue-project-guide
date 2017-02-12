@@ -60,18 +60,22 @@
 
 .card-enter {
   opacity: 0;
+  /* Slide from the right */
   transform: scale(.8) translateX(100px);
 }
 
 .card-leave-active {
+  transition: all 1s, opacity .5s .5s;
+  /* Keep it in the same horizontal position */
   position: absolute !important;
+  /* Make it painted over the other cards */
   z-index: 10;
+  /* Unclickable during the transition */
   pointer-events: none;
-  transition: all 1s cubic-bezier(.08,.74,.34,1), opacity .5s .5s;
 }
 
 .card-leave-to {
   opacity: 0;
+  /* Zoom the card upwards */
   transform: translateX(-106px) translateY(-300px) scale(1.5);
-  border: solid 6px white;
 }
