@@ -65,6 +65,7 @@
 }
 
 .card-leave-active {
+  /* We need different timings for the leave transition */
   transition: all 1s, opacity .5s .5s;
   /* Keep it in the same horizontal position */
   position: absolute !important;
