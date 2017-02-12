@@ -55,6 +55,7 @@
 /* Card */
 
 .card {
+  /* Used for enter, move and mouse over animations */
   transition: all .3s;
 }
 
