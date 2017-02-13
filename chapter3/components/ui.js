@@ -139,9 +139,4 @@ Vue.component('player-result', {
       return this.player.dead ? 'defeated' : 'victorious'
     },
   },
-  methods: {
-    handleClick () {
-      this.$emit('close')
-    },
-  },
 })
