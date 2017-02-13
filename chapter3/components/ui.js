@@ -112,7 +112,7 @@ Vue.component('overlay-content-last-play', {
       <card :def="lastPlayedCard" />
     </template>
   </div>`,
-  props: ['player', 'opponent'],
+  props: ['opponent'],
   computed: {
     lastPlayedCard () {
       return getLastPlayedCard(this.opponent)
