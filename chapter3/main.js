@@ -25,7 +25,7 @@ new Vue({
 
     <transition name="zoom" mode="out-in">
       <overlay v-if="activeOverlay" :key="activeOverlay" @close="handleOverlayClose">
-        <component :is="'overlay-' + activeOverlay" :player="currentPlayer" :opponent="currentOpponent" :players="players" />
+        <component :is="'overlay-content-' + activeOverlay" :player="currentPlayer" :opponent="currentOpponent" :players="players" />
       </overlay>
     </transition>
   </div>`,

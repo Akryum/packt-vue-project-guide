@@ -95,7 +95,7 @@ Vue.component('overlay', {
   },
 })
 
-Vue.component('overlay-player-turn', {
+Vue.component('overlay-content-player-turn', {
   template: `<div>
     <div class="big" v-if="player.skipTurn">{{ player.name }},<br>your turn is skipped!</div>
     <div class="big" v-else>{{ player.name }},<br>your turn has come!</div>
@@ -104,7 +104,7 @@ Vue.component('overlay-player-turn', {
   props: ['player'],
 })
 
-Vue.component('overlay-last-play', {
+Vue.component('overlay-content-last-play', {
   template: `<div>
     <div v-if="opponent.skippedTurn">{{ opponent.name }} turn was skipped!</div>
     <template v-else>
@@ -120,7 +120,7 @@ Vue.component('overlay-last-play', {
   },
 })
 
-Vue.component('overlay-game-over', {
+Vue.component('overlay-content-game-over', {
   template: `<div>
     <div class="big">Game Over</div>
     <player-result v-for="player in players" :player="player" />
