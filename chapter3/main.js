@@ -9,10 +9,10 @@ new Vue({
 
     <div class="world">
       <castle v-for="(player, index) in players" :player="player" :index="index" />
+      <div class="land" />
       <div class="clouds">
         <cloud v-for="index in 10" :index="(index - 1) % 5 + 1" />
       </div>
-      <div class="land" />
     </div>
 
     <transition name="hand">
@@ -23,7 +23,7 @@ new Vue({
       <div class="overlay-background" v-if="activeOverlay" />
     </transition>
 
-    <transition name="zoom" mode="out-in">
+    <transition name="zoom">
       <overlay v-if="activeOverlay" :key="activeOverlay" @close="handleOverlayClose">
         <component :is="'overlay-content-' + activeOverlay" :player="currentPlayer" :opponent="currentOpponent" :players="players" />
       </overlay>

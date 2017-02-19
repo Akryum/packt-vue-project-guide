@@ -1,3 +1,6 @@
+
+/* --- HUD --- */
+
 Vue.component('top-bar', {
   template: `<div class="top-bar" :class="'player-' + currentPlayerIndex">
     <div class="player p0">{{ players[0].name }}</div>
@@ -10,40 +13,6 @@ Vue.component('top-bar', {
   props: ['players', 'currentPlayerIndex', 'turn'],
   created () {
     console.log(this.players, this.currentPlayerIndex, this.turn)
-  },
-})
-
-function bubbleStyle () {
-  return {
-    top: (this.ratio * 220 + 40) * state.worldRatio + 'px',
-  }
-}
-
-Vue.component('food-bubble', {
-  template: `<div class="food-bubble stat-bubble" :style="bubbleStyle">
-    <img src="svg/food-bubble.svg" />
-    <div class="counter">{{ value }}</div>
-  </div>`,
-  props: ['value'],
-  computed: {
-    ratio () {
-      return this.value / maxFood
-    },
-    bubbleStyle,
-  },
-})
-
-Vue.component('health-bubble', {
-  template: `<div class="health-bubble stat-bubble" :style="bubbleStyle">
-    <img src="svg/health-bubble.svg" />
-    <div class="counter">{{ value }}</div>
-  </div>`,
-  props: ['value'],
-  computed: {
-    ratio () {
-      return this.value / maxHealth
-    },
-    bubbleStyle,
   },
 })
 
@@ -81,6 +50,8 @@ Vue.component('hand', {
     },
   },
 })
+
+/* --- OVERLAYS --- */
 
 Vue.component('overlay', {
   template: `<div class="overlay" @click="handleClick">
