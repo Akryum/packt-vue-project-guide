@@ -49,13 +49,6 @@ var state = {
     return state.currentPlayer.hand
   },
   drawPile: pile,
-  get drawPileCount () {
-    let result = 0
-    for (let k in state.drawPile) {
-      result += state.drawPile[k]
-    }
-    return result
-  },
   discardPile: {},
   canPlay: false,
 }

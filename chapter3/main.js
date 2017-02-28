@@ -99,7 +99,7 @@ function beginGame () {
 }
 
 function playCard (card) {
-  if (!state.playedCard) {
+  if (state.canPlay) {
     state.canPlay = false
     currentPlayingCard = card
 
