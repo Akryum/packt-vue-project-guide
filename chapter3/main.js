@@ -11,7 +11,7 @@ new Vue({
       <castle v-for="(player, index) in players" :player="player" :index="index" />
       <div class="land" />
       <div class="clouds">
-        <cloud v-for="index in 10" :index="(index - 1) % 5 + 1" />
+        <cloud v-for="index in 10" :type="(index - 1) % 5 + 1" />
       </div>
     </div>
 
@@ -45,12 +45,12 @@ new Vue({
       playCard(card)
     },
 
-    handleOverlayClose () {
-      overlayCloseHandlers[this.activeOverlay]()
-    },
-
     handleCardLeaveEnd () {
       applyCard()
+    },
+
+    handleOverlayClose () {
+      overlayCloseHandlers[this.activeOverlay]()
     },
   },
 
@@ -117,7 +117,7 @@ function applyCard () {
 
   applyCardEffect(card)
 
-  // Wait a bit for the animations to complete
+  // Wait a bit for the player to see what's going on
   setTimeout(() => {
     // Check if the players are dead
     state.players.forEach(checkPlayerLost)
@@ -127,7 +127,7 @@ function applyCard () {
     } else {
       nextTurn()
     }
-  }, 500)
+  }, 700)
 }
 
 function nextTurn () {

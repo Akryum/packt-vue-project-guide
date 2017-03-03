@@ -85,10 +85,10 @@ const cloudAnimationDurations = {
 }
 
 Vue.component('cloud', {
-  template: `<div class="cloud" :class="'cloud-' + index" :style="style">
-    <img :src="'svg/cloud' + index + '.svg'" @load="initPosition" />
+  template: `<div class="cloud" :class="'cloud-' + type" :style="style">
+    <img :src="'svg/cloud' + type + '.svg'" @load="initPosition" />
   </div>`,
-  props: ['index'],
+  props: ['type'],
   data () {
     return {
       style: {
