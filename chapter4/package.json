@@ -1,0 +1,13 @@
+{
+  "name": "chapter4",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vue build src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "less": "^2.7.2",
+    "less-loader": "^4.0.3"
+  }
+}
