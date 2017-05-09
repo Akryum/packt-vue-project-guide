@@ -10,6 +10,8 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
     "node-sass": "^4.5.2",
+    "pug": "^2.0.0-rc.1",
+    "pug-loader": "^2.3.0",
     "sass-loader": "^6.0.3",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
