@@ -1,0 +1,18 @@
+{
+  "name": "support-center",
+  "version": "1.0.0",
+  "description": "A web app wich allows customers posting support ticket and reading a FAQ.",
+  "scripts": {
+    "dev": "vue build src/index.js"
+  },
+  "author": "<Guillaume Chau> guillaume.b.chau@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "vue-cli": "^2.8.2"
+  },
+  "dependencies": {
+    "vue-router": "^2.5.3"
+  }
+}
