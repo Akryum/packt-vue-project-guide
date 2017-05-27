@@ -13,7 +13,6 @@
 </template>
 
 <style lang="stylus" scoped>
-.actions,
 p {
   text-align: center;
 }

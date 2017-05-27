@@ -4,6 +4,7 @@ import router from './router'
 import state from './state'
 import VueFetch, { $fetch } from './plugins/fetch'
 import VueState from './plugins/state'
+import './global-components'
 
 Vue.use(VueFetch)
 Vue.use(VueState, state)

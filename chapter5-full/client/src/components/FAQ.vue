@@ -2,7 +2,7 @@
   <main class="faq">
     <h1>Frenquently Asked Questions</h1>
 
-    <div v-if="remoteDataBusy" class="loading">Loading...</div>
+    <Loading v-if="remoteDataBusy"/>
     <section v-else class="list">
       <article v-for="question of questions">
         <h2 v-html="question.title"></h2>

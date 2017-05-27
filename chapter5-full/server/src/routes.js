@@ -1,6 +1,8 @@
 import passport from 'passport'
-import { initData, Questions } from './providers'
+import { initData } from './providers'
 import * as Users from './connectors/users'
+import * as Questions from './connectors/questions'
+import * as Tickets from './connectors/tickets'
 
 initData()
 
@@ -13,7 +15,7 @@ function sendUserInfo (req, res) {
 
 export default function (app) {
   app.get('/questions', async (req, res) => {
-    const result = await Questions.find({})
+    const result = await Questions.getAll()
     setTimeout(() => {
       res.json(result)
     }, 1500)
@@ -61,5 +63,14 @@ export default function (app) {
   app.get('/logout', (req, res) => {
     req.logout()
     res.send('ok')
+  })
+
+  app.get('/tickets', async (req, res) => {
+    if (!req.user) {
+      res.status(403).send('Unauthorized')
+    } else {
+      const result = await Tickets.getAll(req.user)
+      res.json(result)
+    }
   })
 }

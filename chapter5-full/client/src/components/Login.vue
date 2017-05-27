@@ -1,7 +1,7 @@
 <template>
   <main class="login">
     <h1>Please login to continue</h1>
-    <form method="post" action="login" @submit.prevent="handleSubmit">
+    <form @submit.prevent="handleSubmit">
       <section>
         <h2>{{ title }}</h2>
 
@@ -21,16 +21,20 @@
         <div class="actions">
           <template v-if="mode === 'login'">
             <button type="button" class="secondary" @click="mode = 'signup'">Sign up</button>
-            <button type="submit" :disabled="!valid">Login</button>
+            <button type="submit" :disabled="!valid || busy">Login</button>
           </template>
           <template v-else-if="mode === 'signup'">
             <button type="button" class="secondary" @click="mode = 'login'">Back to login</button>
-            <button type="submit" :disabled="!valid">Create account</button>
+            <button type="submit" :disabled="!valid || busy">Create account</button>
           </template>
         </div>
 
         <div class="error" v-if="error">{{ error }}</div>
       </section>
+
+      <transition name="fade">
+        <Loading v-if="busy" class="overlay" />
+      </transition>
     </form>
   </main>
 </template>
@@ -44,6 +48,7 @@ export default {
       password2: '',
       email: '',
 
+      busy: false,
       error: null,
 
       mode: 'login',
@@ -65,10 +70,12 @@ export default {
   },
 
   methods: {
-    handleSubmit() {
-      if (this.valid) {
+    async handleSubmit() {
+      if (this.valid && !this.busy) {
+        this.busy = true
         this.error = null
-        this[this.mode]()
+        await this[this.mode]()
+        this.busy = false
       }
     },
 
