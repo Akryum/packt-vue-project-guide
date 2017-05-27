@@ -1,7 +1,9 @@
 <template>
   <main class="faq">
     <h1>Frenquently Asked Questions</h1>
-    <section class="list">
+
+    <div v-if="remoteDataBusy" class="loading">Loading...</div>
+    <section v-else class="list">
       <article v-for="question of questions">
         <h2 v-html="question.title"></h2>
         <p v-html="question.content"></p>
@@ -11,16 +13,24 @@
 </template>
 
 <script>
+import RemoteData from '../mixins/RemoteData'
+
 export default {
-  data () {
+  mixins: [
+    RemoteData({
+      questions: 'questions',
+    })
+  ],
+
+  /* data () {
     return {
       questions: [],
     }
   },
 
   async created () {
-    const result = await fetch('http://localhost:3000/questions')
+    const result = await this.$fetch('questions')
     this.questions = await result.json()
-  },
+  }, */
 }
 </script>

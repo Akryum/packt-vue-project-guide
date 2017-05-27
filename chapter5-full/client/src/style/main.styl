@@ -6,12 +6,8 @@ body {
   font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-html,
-body,
-#app {
-  min-height: 100%;
+  overflow-y: scroll;
+  padding-bottom: 300px;
 }
 
 .material-icons {
@@ -31,6 +27,45 @@ body,
   vertical-align: middle;
 }
 
+.app-layout {
+  max-width: 900px;
+  margin: auto;
+}
+
+header {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  font-weight: lighter;
+  v-box();
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: solid 2px $primary-color;
+  margin: 32px auto;
+  position: relative;
+
+  > div {
+    width: 128px;
+  }
+
+  &::before {
+    $margin = 6px;
+
+    display: block;
+    content: '';
+    position: absolute;
+    top: $margin;
+    bottom: $margin;
+    left: $margin;
+    right: $margin;
+    border-radius: 50%;
+    border: dashed 2px rgba($primary-color, .3);
+  }
+}
+
 a {
   color: $primary-color;
   text-decoration: none;
@@ -47,7 +82,7 @@ input {
   font-family: inherit;
   border: none;
   outline: none;
-  padding: 12px 24px;
+  padding: 16px 32px;
   border-radius: 2px;
 }
 
@@ -59,6 +94,7 @@ button {
   text-align: center;
   transition: background .3s;
   user-select: none;
+  border: solid 1px $primary-color;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 
   &:hover {
@@ -88,6 +124,23 @@ button {
       top: 0;
     }
   }
+
+  &.secondary {
+    background: white;
+    border-color: rgba($primary-color, .3);
+    color: $primary-color;
+
+    &:hover {
+      background: lighten($primary-color, 85%);
+    }
+  }
+
+  &[disabled='disabled'] {
+    background: $md-grey-400;
+    cursor: not-allowed;
+    color: $md-grey-200;
+    border-color: $md-grey-500;
+  }
 }
 
 input {
@@ -95,12 +148,12 @@ input {
   display: block;
   width: 100%;
   box-sizing: border-box;
-  border: solid 1px $md-grey-100;
-  border-bottom: solid 2px $md-grey-300;
+  border: solid 1px $md-grey-200;
+  // border-bottom: solid 2px $md-grey-300;
   text-align: left;
 
   &:focus {
-    border-bottom-color: $primary-color;
+    border-color: $primary-color;
   }
 }
 
@@ -125,18 +178,84 @@ h1 {
   color: $primary-color;
   margin-top: 0;
   font-weight: lighter;
-  font-size: 3em;
+  font-size: 2.2em;
+  text-align: center;
+
+  &::after {
+    display: block;
+    content: '';
+    width: 160px;
+    border-bottom: 2px dashed rgba($primary-color, .3);
+    margin: 16px auto 32px;
+  }
 }
 
 h2 {
-  color: darken($primary-color, 20%);
+  color: darken($primary-color, 5%);
   font-weight: normal;
-  margin: 32px 0 16px;
+  margin: 16px 0;
+
+  &::after {
+    display: block;
+    content: '';
+    width: 80px;
+    border-bottom: 2px dashed rgba($primary-color, .3);
+    margin: 8px 0 16px;
+  }
+}
+
+article {
+  &:not(:first-child) {
+    margin-top: 64px;
+  }
 }
 
 main {
   padding: 32px;
   margin: 0 auto;
+}
+
+form {
+  padding: 64px 32px;
+  background: rgba($primary-color, .05);
+
+  > section {
+    margin: auto;
+  }
+
+  .row,
+  .actions,
+  .error {
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
+
+  .actions {
+    h-box();
+
+    > * {
+      flex: 100% 1 1;
+      space-between-x(16px);
+    }
+  }
+
+  h2 {
+    margin: 0 0 16px;
+    // text-align: center;
+
+    &::after {
+      width: 100%;
+      border-bottom-color: rgba($primary-color, .15);
+    }
+  }
+
+  .error {
+    background: $md-red-100;
+    color: $md-red;
+    padding: 16px 32px;
+    border-radius: 3px;
+  }
 }
 
 .hero,
@@ -162,6 +281,13 @@ main {
   @media ({$small-screen}) {
     font-size: 22px;
   }
+}
+
+.loading {
+  margin: 32px 0;
+  text-align: center;
+  color: rgba($primary-color, .7);
+  font-size: 1.5em;
 }
 
 .hero {

@@ -1,6 +1,18 @@
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
-import { Users } from './providers'
+import * as Users from './connectors/users'
+
+async function authUser (username, password) {
+  const user = await Users.getUserByUsername(username)
+  let valid = false
+  if (user) {
+    valid = await Users.isPasswordMatching(user, password)
+  }
+  return {
+    valid,
+    user,
+  }
+}
 
 passport.use('local', new LocalStrategy(
   async (username, password, done) => {
@@ -8,21 +20,21 @@ passport.use('local', new LocalStrategy(
     if (valid) {
       return done(null, user)
     } else {
-      return done(new Error('invalid username or password'))
+      return done('Invalid username or password')
     }
   }
 ))
 
 passport.serializeUser(
-  async (user, done) => {
-    return done(null, user._id)
+  (user, done) => {
+    done(null, user._id)
   }
 )
 
 passport.deserializeUser(
   async (id, done) => {
-    const user = await Users.findOne({ _id: id })
-    const err = !user ? new Error('user not found') : null
-    return done(err, user)
+    const user = await Users.getUserById(id)
+    const err = !user ? new Error('User not found') : null
+    done(err, user || null)
   }
 )
