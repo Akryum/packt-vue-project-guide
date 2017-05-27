@@ -297,10 +297,11 @@ form {
 .loading {
   $size = 32px;
 
-  text-align: center;
+  h-box();
+  align-items: center;
+  justify-content: center;
 
   div {
-    display: inline-block;
     width: $size;
     height: $size;
     border: solid 2px transparent;
@@ -315,9 +316,20 @@ form {
     bottom: 0;
     left: 0;
     right: 0;
-    h-box();
-    align-items: center;
-    justify-content: center;
+    background: rgba(white, .75);
+  }
+
+  &.page {
+    position: fixed;
+    bottom: 64px;
+    left: 'calc(50% - %s)' % ($size / 2);
+    width: $size;
+    height: $size;
+    padding: 16px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 4px 15px rgba(black, .1);
+    pointer-events: none;
   }
 }
 

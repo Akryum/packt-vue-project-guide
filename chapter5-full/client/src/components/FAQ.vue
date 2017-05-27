@@ -2,8 +2,11 @@
   <main class="faq">
     <h1>Frenquently Asked Questions</h1>
 
-    <Loading v-if="remoteDataBusy"/>
-    <section v-else class="list">
+    <transition name="zoom" appear>
+      <Loading v-if="remoteDataBusy" class="page"/>
+    </transition>
+
+    <section class="list">
       <article v-for="question of questions">
         <h2 v-html="question.title"></h2>
         <p v-html="question.content"></p>
@@ -14,12 +17,18 @@
 
 <script>
 import RemoteData from '../mixins/RemoteData'
+import PersistantData from '../mixins/PersistantData'
 
 export default {
+  name: 'FAQ',
+
   mixins: [
     RemoteData({
       questions: 'questions',
-    })
+    }),
+    PersistantData([
+      'questions',
+    ]),
   ],
 
   /* data () {

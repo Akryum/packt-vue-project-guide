@@ -6,6 +6,14 @@ import * as Tickets from './connectors/tickets'
 
 initData()
 
+function privateRoute (req, res, next) {
+  if (!req.user) {
+    res.status(403).send('Unauthorized')
+  } else {
+    next()
+  }
+}
+
 function sendUserInfo (req, res) {
   res.json({
     _id: req.user._id,
@@ -52,12 +60,8 @@ export default function (app) {
     res.status(403).send(err)
   })
 
-  app.post('/user', (req, res) => {
-    if (req.user) {
-      sendUserInfo(req, res)
-    } else {
-      res.status(403).send('Unauthorized')
-    }
+  app.get('/user', privateRoute, (req, res) => {
+    sendUserInfo(req, res)
   })
 
   app.get('/logout', (req, res) => {
@@ -65,12 +69,24 @@ export default function (app) {
     res.send('ok')
   })
 
-  app.get('/tickets', async (req, res) => {
-    if (!req.user) {
-      res.status(403).send('Unauthorized')
-    } else {
-      const result = await Tickets.getAll(req.user)
-      res.json(result)
-    }
+  app.get('/tickets', privateRoute, async (req, res) => {
+    const result = await Tickets.getAll({
+      user: req.user,
+    })
+    res.json(result)
+  })
+
+  app.post('/tickets/new', privateRoute, async (req, res) => {
+    const result = await Tickets.create({
+      user: req.user,
+    }, req.body)
+    res.json(result)
+  })
+
+  app.get('/ticket', privateRoute, async (req, res) => {
+    const result = await Tickets.getById({
+      user: req.user,
+    }, req.params.id)
+    res.json(result)
   })
 }

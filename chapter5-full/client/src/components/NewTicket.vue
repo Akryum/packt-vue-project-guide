@@ -1,7 +1,6 @@
 <template>
   <div class="new-ticket">
-    <form @submit.prevent="submit">
-      <h2>New ticket</h2>
+    <SmartForm title="New ticket" :operation="operation" :valid="valid">
       <div class="row">
         <input name="title" v-model="title" placeholder="Short description (max 100 chars)" maxlength="100" required/>
       </div>
@@ -9,11 +8,12 @@
         <textarea name="description" v-model="description" placeholder="Describe your problem in details" required rows="4"/>
       </div>
 
-      <div class="actions">
+      <template slot="actions">
         <router-link tag="button" :to="{name: 'tickets'}" class="secondary">Go back</router-link>
         <button type="submit" :disabled="!valid">Send ticket</button>
-      </div>
-    </form>
+      </template>
+
+    </SmartForm>
   </div>
 </template>
 
@@ -32,7 +32,6 @@ export default {
 
   data () {
     return {
-      busy: false,
       title: '',
       description: '',
     }
@@ -45,15 +44,9 @@ export default {
   },
 
   methods: {
-    submit () {
+    async operation () {
       // TODO
-      if (this.valid) {
-        this.busy = true
-
-        this.busy = false
-        // Reset fields
-        this.title = this.description = ''
-      }
+      this.title = this.description = ''
     },
   },
 }

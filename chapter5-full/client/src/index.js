@@ -10,11 +10,11 @@ Vue.use(VueFetch)
 Vue.use(VueState, state)
 
 async function main () {
-  const result = await $fetch('user', {
-    method: 'POST',
-  })
-  if (result.ok) {
+  try {
+    const result = await $fetch('user')
     state.user = await result.json()
+  } catch (e) {
+    console.warn(e.message)
   }
 
   new Vue({
