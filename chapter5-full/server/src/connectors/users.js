@@ -3,11 +3,11 @@ import { Users } from '../providers'
 
 const SALT_ROUNDS = 10
 
-export async function getUserById (id) {
+export async function getById (id) {
   return await Users.findOne({ _id: id })
 }
 
-export async function getUserByUsername (username) {
+export async function getByUsername (username) {
   return await Users.findOne({ username })
 }
 
@@ -20,7 +20,7 @@ export async function hashPassword (password) {
 }
 
 export async function createUser ({ username, email, password }) {
-  const user = await getUserByUsername(username)
+  const user = await getByUsername(username)
   if (user) {
     throw new Error('Duplicate username')
   } else {

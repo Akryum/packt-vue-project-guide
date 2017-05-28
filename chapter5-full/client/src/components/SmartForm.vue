@@ -32,6 +32,10 @@ export default {
       type: Boolean,
       required: true,
     },
+    reloadOnUnauthorized: {
+      type: Boolean,
+      default: false,
+    }
   },
 
   data () {
@@ -50,6 +54,9 @@ export default {
           await this.operation()
         } catch (e) {
           this.error = e.message
+          if (e.response.status === 403 && this.reloadOnUnauthorized) {
+            document.location.reload()
+          }
         }
         this.busy = false
       }

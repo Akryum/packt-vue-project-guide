@@ -83,7 +83,7 @@ export default function (app) {
     res.json(result)
   })
 
-  app.get('/ticket', privateRoute, async (req, res) => {
+  app.get('/ticket/:id', privateRoute, async (req, res) => {
     const result = await Tickets.getById({
       user: req.user,
     }, req.params.id)

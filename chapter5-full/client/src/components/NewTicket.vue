@@ -1,6 +1,6 @@
 <template>
   <div class="new-ticket">
-    <SmartForm title="New ticket" :operation="operation" :valid="valid">
+    <SmartForm title="New ticket" :operation="operation" :valid="valid" reloadOnUnauthorized>
       <div class="row">
         <input name="title" v-model="title" placeholder="Short description (max 100 chars)" maxlength="100" required/>
       </div>
@@ -45,8 +45,16 @@ export default {
 
   methods: {
     async operation () {
-      // TODO
+      const result = await this.$fetch('tickets/new', {
+        method: 'POST',
+        body: JSON.stringify({
+          title: this.title,
+          description: this.description,
+        }),
+      })
+      const obj = await result.json()
       this.title = this.description = ''
+      this.$router.push({ name: 'ticket', params: { id: obj._id } })
     },
   },
 }

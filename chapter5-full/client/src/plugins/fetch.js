@@ -7,12 +7,14 @@ export function $fetch (url, options) {
     },
     credentials: 'include',
   }, options)
-  return fetch(`http://localhost:3000/${url}`, finalOptions).then(async (result) => {
-    if (result.ok) {
-      return Promise.resolve(result)
+  return fetch(`http://localhost:3000/${url}`, finalOptions).then(async (response) => {
+    if (response.ok) {
+      return Promise.resolve(response)
     } else {
-      const message = await result.text()
-      return Promise.reject(new Error(message))
+      const message = await response.text()
+      const error = new Error(message)
+      error.response = response
+      return Promise.reject(error)
     }
   })
 }

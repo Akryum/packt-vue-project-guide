@@ -19,13 +19,34 @@ export default function (resources) {
       },
     },
 
-    created () {
-      Object.keys(resources).forEach(async (key) => {
+    methods: {
+      async fetchResource(key, url) {
         this.$data._remoteDataLoading++
-        const result = await this.$fetch(resources[key])
-        this.$data[key] = await result.json()
+        try {
+          const result = await this.$fetch(url)
+          this.$data[key] = await result.json()
+        } catch (e) {
+          if (e.response.status === 403) {
+            document.location.reload()
+          }
+        }
         this.$data._remoteDataLoading--
-      })
+      },
+    },
+
+    created () {
+      for (const key in resources) {
+        let url = resources[key]
+        if (typeof url === 'function') {
+          this.$watch(url, (val) => {
+            this.fetchResource(key, val)
+          }, {
+            immediate: true,
+          })
+        } else {
+          this.fetchResource(key, url)
+        }
+      }
     },
   }
 }

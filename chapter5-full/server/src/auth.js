@@ -3,7 +3,7 @@ import { Strategy as LocalStrategy } from 'passport-local'
 import * as Users from './connectors/users'
 
 async function authUser (username, password) {
-  const user = await Users.getUserByUsername(username)
+  const user = await Users.getByUsername(username)
   let valid = false
   if (user) {
     valid = await Users.isPasswordMatching(user, password)
@@ -33,7 +33,7 @@ passport.serializeUser(
 
 passport.deserializeUser(
   async (id, done) => {
-    const user = await Users.getUserById(id)
+    const user = await Users.getById(id)
     const err = !user ? new Error('User not found') : null
     done(err, user || null)
   }

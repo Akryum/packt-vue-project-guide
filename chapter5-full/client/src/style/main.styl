@@ -197,10 +197,6 @@ h1 {
 }
 
 h2 {
-  color: darken($primary-color, 5%);
-  font-weight: normal;
-  margin: 16px 0;
-
   &::after {
     display: block;
     content: '';
@@ -210,9 +206,28 @@ h2 {
   }
 }
 
+h2,
+h3 {
+  color: darken($primary-color, 5%);
+  font-weight: normal;
+  margin: 16px 0;
+}
+
 article {
   &:not(:first-child) {
     margin-top: 64px;
+  }
+}
+
+h2,
+h3,
+p {
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 
@@ -496,6 +511,50 @@ form {
     &:first-child:last-child {
       border-radius: 3px;
     }
+  }
+}
+
+.tickets-list {
+  .ticket-item {
+    padding: 16px;
+
+    &:not(:last-child) {
+      border-bottom: dashed 2px rgba($primary-color, .3);
+    }
+
+    &:hover {
+      background: rgba($primary-color, .05);
+    }
+
+    .date {
+      float: right;
+      color: $md-grey-400;
+    }
+  }
+}
+
+.ticket {
+  section.infos {
+    margin-bottom: 32px;
+
+    .info {
+      color: $md-grey-400;
+
+      &:not(:last-child) {
+        margin-bottom: 16px;
+      }
+
+      strong {
+        color: $md-grey-600;
+        font-weight: normal;
+      }
+    }
+  }
+
+  section.content {
+    padding: 16px 32px;
+    border-left: solid 2px rgba($primary-color, .3);
+    background: rgba($primary-color, .05);
   }
 }
 

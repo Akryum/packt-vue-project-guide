@@ -16,6 +16,18 @@ export default function (fields) {
         localStorage.setItem(`${name}.${field}`, JSON.stringify(val))
       }
       return obj
-    }, {})
+    }, {}),
+
+    methods: {
+      saveAllPersistantData () {
+        for (const field of fields) {
+          localStorage.setItem(`${name}.${field}`, JSON.stringify(this.$data[field]))
+        }
+      },
+    },
+
+    beforeDestroy () {
+      this.saveAllPersistantData()
+    },
   }
 }
