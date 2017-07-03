@@ -2,18 +2,12 @@
   <main class="login">
     <h1>Please login to continue</h1>
     <SmartForm :title="title" :operation="operation" :valid="valid">
-      <div class="row">
-        <input name="username" v-model="username" placeholder="Username" required/>
-      </div>
-      <div class="row">
-        <input name="password" type="password" v-model="password" placeholder="Password" required/>
-      </div>
-      <div class="row" v-if="mode === 'signup'">
-        <input name="verify-password" type="password" v-model="password2" placeholder="Retype Password" required/>
-      </div>
-      <div class="row" v-if="mode === 'signup'">
-        <input name="email" type="email" v-model="email" placeholder="Email" required/>
-      </div>
+      <FormInput name="username" v-model="username" placeholder="Username" />
+      <FormInput name="password" type="password" v-model="password" placeholder="Password" />
+      <template v-if="mode === 'signup'">
+        <FormInput name="verify-password" type="password" v-model="password2" placeholder="Retype Password" :invalid="retypePasswordError" />
+        <FormInput name="email" type="email" v-model="email" placeholder="Email" />
+      </template>
 
       <template slot="actions">
         <template v-if="mode === 'login'">
@@ -53,9 +47,17 @@ export default {
       }
     },
 
+    retypePasswordError () {
+      return !!this.password2 && this.password !== this.password2
+    },
+
+    signupValid () {
+      return !!this.password2 && !!this.email && !this.retypePasswordError
+    },
+
     valid () {
       return !!this.username && !!this.password &&
-      (this.mode !== 'signup' || (!!this.email && this.password === this.password2))
+      (this.mode !== 'signup' || this.signupValid)
     }
   },
 
