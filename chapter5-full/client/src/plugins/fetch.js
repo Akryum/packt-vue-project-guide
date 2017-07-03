@@ -1,31 +1,32 @@
+let baseUrl
 
-export function $fetch (url, options) {
+export async function $fetch (url, options) {
   const finalOptions = Object.assign({}, {
     headers: {
-      'Accept': 'application/json, text/plain, */*',
       'Content-Type': 'application/json',
     },
     credentials: 'include',
   }, options)
-  return fetch(`http://localhost:3000/${url}`, finalOptions).then(async (response) => {
-    if (response.ok) {
-      return Promise.resolve(response)
-    } else {
-      const message = await response.text()
-      const error = new Error(message)
-      error.response = response
-      return Promise.reject(error)
-    }
-  })
+  const response = await fetch(`${baseUrl}${url}`, finalOptions)
+  if (response.ok) {
+    const data = await response.json()
+    return data
+  } else {
+    const message = await response.text()
+    const error = new Error(message)
+    error.response = response
+    throw error
+  }
 }
 
 export default {
-  install (Vue) {
+  install (Vue, options) {
+    console.log('Installed!', options)
+
+    // Plugin options
+    baseUrl = options.baseUrl
+
     // Fetch
-    Vue.mixin({
-      methods: {
-        $fetch,
-      },
-    })
+    Vue.prototype.$fetch = $fetch
   },
 }

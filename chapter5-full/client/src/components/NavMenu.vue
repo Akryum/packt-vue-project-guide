@@ -1,8 +1,8 @@
 <template>
   <nav class="menu">
-    <router-link :to="{name: 'home'}" exact>Home</router-link>
-    <router-link :to="{name: 'faq'}">FAQ</router-link>
-    <router-link :to="{name: 'tickets'}">Support tickets</router-link>
+    <router-link :to="{ name: 'home' }" exact>Home</router-link>
+    <router-link :to="{ name: 'faq' }">FAQ</router-link>
+    <router-link :to="{ name: 'tickets' }">Support tickets</router-link>
     <div class="spacer"></div>
 
     <template v-if="$state.user">
@@ -18,7 +18,7 @@ export default {
   methods: {
     async logout () {
       const result = await this.$fetch('logout')
-      if (result.ok) {
+      if (result.status === 'ok') {
         this.$state.user = null
         // Return to home if page is private
         if (this.$route.matched.some(m => m.meta.private)) {
@@ -33,23 +33,7 @@ export default {
 <style lang="stylus" scoped>
 @import '../style/imports';
 
-nav {
-  padding: 16px 32px 0;
-  h-box();
-}
-
-a {
-  text-decoration: none;
-  border-bottom: solid 2px transparent;
-  display: inline-block;
-  padding: 12px 16px 10px;
-
-  &.router-link-active {
-    border-bottom-color: $primary-color;
-  }
-}
-
-.spacer {
-  flex: 100% 1 1;
+.router-link-active {
+  border-bottom-color: $primary-color;
 }
 </style>

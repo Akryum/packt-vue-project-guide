@@ -39,7 +39,7 @@ export default function (app) {
           email: req.body.email,
           password: req.body.password,
         })
-        res.send('ok')
+        res.json({ status: 'ok' })
       }
     } catch (e) {
       res.status(403).send(e.message)
@@ -66,7 +66,7 @@ export default function (app) {
 
   app.get('/logout', (req, res) => {
     req.logout()
-    res.send('ok')
+    res.json({ status: 'ok' })
   })
 
   app.get('/tickets', privateRoute, async (req, res) => {

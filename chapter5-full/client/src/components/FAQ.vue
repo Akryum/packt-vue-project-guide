@@ -1,45 +1,48 @@
 <template>
   <main class="faq">
-    <h1>Frenquently Asked Questions</h1>
+    <h1>Frequently Asked Questions</h1>
 
-    <transition name="zoom" appear>
-      <Loading v-if="remoteDataBusy" class="page"/>
-    </transition>
+    <Loading v-if="remoteDataBusy" />
+
+    <div class="error" v-if="hasRemoteErrors">
+      Can't load the questions
+    </div>
 
     <section class="list">
-      <article v-for="question of questions">
+      <article v-for="question of questionList">
         <h2 v-html="question.title"></h2>
         <p v-html="question.content"></p>
       </article>
     </section>
+
   </main>
 </template>
 
 <script>
 import RemoteData from '../mixins/RemoteData'
-import PersistantData from '../mixins/PersistantData'
 
 export default {
-  name: 'FAQ',
-
   mixins: [
     RemoteData({
-      questions: 'questions',
+      questionList: 'questions',
     }),
-    PersistantData([
-      'questions',
-    ]),
   ],
 
   /* data () {
     return {
       questions: [],
+      error: null,
+      loading: false,
+      $remoteDataLoading: 42,
     }
   },
 
   async created () {
-    const result = await this.$fetch('questions')
-    this.questions = await result.json()
+    try {
+      this.questions = await this.$fetch('questions')
+    } catch (e) {
+      this.error = e
+    }
   }, */
 }
 </script>

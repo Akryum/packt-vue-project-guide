@@ -35,7 +35,7 @@ export default {
     reloadOnUnauthorized: {
       type: Boolean,
       default: false,
-    }
+    },
   },
 
   data () {

@@ -7,7 +7,10 @@ import VueState from './plugins/state'
 import './global-components'
 import * as filters from './filters'
 
-Vue.use(VueFetch)
+Vue.use(VueFetch, {
+  baseUrl: 'http://localhost:3000/',
+})
+
 Vue.use(VueState, state)
 
 for (const key in filters) {
@@ -16,8 +19,7 @@ for (const key in filters) {
 
 async function main () {
   try {
-    const result = await $fetch('user')
-    state.user = await result.json()
+    state.user = await $fetch('user')
   } catch (e) {
     console.warn(e.message)
   }

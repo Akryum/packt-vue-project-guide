@@ -3,9 +3,11 @@
     <h2>Ticket</h2>
 
     <Loading v-if="remoteDataBusy"/>
+
     <div class="empty" v-else-if="!ticket">
       Ticket not found.
     </div>
+
     <template v-else>
 
       <section class="infos">

@@ -1,36 +1,52 @@
 export default function (resources) {
   return {
     data () {
-      let data = {
-        _remoteDataLoading: 0,
+      let initData = {
+        remoteDataLoading: 0,
       }
 
       // Initialize data properties
+      initData.remoteErrors = {}
       for (const key in resources) {
-        data[key] = null
+        initData[key] = null
+        initData.remoteErrors[key] = null
       }
 
-      return data
+      return initData
     },
 
     computed: {
       remoteDataBusy () {
-        return this.$data._remoteDataLoading !== 0
+        return this.$data.remoteDataLoading !== 0
+      },
+
+      hasRemoteErrors () {
+        return Object.keys(this.$data.remoteErrors).some(
+          key => this.$data.remoteErrors[key]
+        )
       },
     },
 
     methods: {
-      async fetchResource(key, url) {
-        this.$data._remoteDataLoading++
+      async fetchResource (key, url) {
+        this.$data.remoteDataLoading++
+        this.$data.remoteErrors[key] = null
         try {
-          const result = await this.$fetch(url)
-          this.$data[key] = await result.json()
+          this.$data[key] = await this.$fetch(url)
         } catch (e) {
-          if (e.response.status === 403) {
-            document.location.reload()
+          console.error(e)
+          // If we are in a private route
+          // We go to the login screen
+          if (e.response && e.response.status === 403 &&
+              this.$route.matched.some(m => m.meta.private)) {
+            this.$router.replace({ name: 'login', params: {
+              wantedRoute: this.$route.fullPath,
+            }})
+          } else {
+            this.$data.remoteErrors[key] = e
           }
         }
-        this.$data._remoteDataLoading--
+        this.$data.remoteDataLoading--
       },
     },
 

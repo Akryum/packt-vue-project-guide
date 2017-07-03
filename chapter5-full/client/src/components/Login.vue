@@ -65,19 +65,18 @@ export default {
     },
 
     async login () {
-      const result = await this.$fetch('login', {
+      this.$state.user = await this.$fetch('login', {
         method: 'POST',
         body: JSON.stringify({
           username: this.username,
           password: this.password,
         }),
       })
-      this.$state.user = await result.json()
       this.$router.replace(this.$route.params.wantedRoute || { name: 'home' })
     },
 
     async signup () {
-      const result = await this.$fetch('signup', {
+      await this.$fetch('signup', {
         method: 'POST',
         body: JSON.stringify({
           username: this.username,
