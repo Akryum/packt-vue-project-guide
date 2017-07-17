@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import { Users } from '../providers'
+import * as Tickets from './tickets'
 
 const SALT_ROUNDS = 10
 
@@ -30,6 +31,12 @@ export async function createUser ({ username, email, password }) {
       email,
       password: hash,
     })
+
+    Tickets.create({ user: result }, {
+      title: 'Welcome',
+      description: 'Welcome to our support center!',
+    })
+
     return result
   }
 }
