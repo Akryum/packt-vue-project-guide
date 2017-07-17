@@ -11,10 +11,12 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "vue-cli": "^2.8.2",
-    "vue-loader": "^12.2.0"
+    "vue-loader": "^12.2.0",
+    "vue-template-compiler": "^2.4.1"
   },
   "dependencies": {
     "moment": "^2.18.1",
+    "vue": "^2.4.1",
     "vue-router": "^2.5.3"
   }
 }
