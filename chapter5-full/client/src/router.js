@@ -5,11 +5,11 @@ import state from './state'
 import Home from './components/Home.vue'
 import FAQ from './components/FAQ.vue'
 import Login from './components/Login.vue'
-import NotFound from './components/NotFound.vue'
 import TicketsLayout from './components/TicketsLayout.vue'
 import Tickets from './components/Tickets.vue'
 import NewTicket from './components/NewTicket.vue'
 import Ticket from './components/Ticket.vue'
+import NotFound from './components/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -28,24 +28,33 @@ const routes = [
 const router = new VueRouter({
   routes,
   mode: 'history',
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+    if (to.hash) {
+      return { selector: to.hash }
+    }
+    return { x: 0, y: 0 }
+  },
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(m => m.meta.private)) {
-    // If private page and not authenticated, redirect to login
-    if (!state.user) {
-      next({ name: 'login', params: {
+  console.log('to', to.name)
+  // if (to.meta.private && !state.user) {
+  if (to.matched.some(r => r.meta.private) && !state.user) {
+    next({
+      name: 'login',
+      params: {
         wantedRoute: to.fullPath,
-      }})
-      return
-    }
+      },
+    })
+    return
   }
-  if (to.matched.some(m => m.meta.guest)) {
-    // If authenticated and page is guest-only, redirect to home
-    if (state.user) {
-      next({ name: 'home' })
-      return
-    }
+  // if (to.meta.guest && state.user) {
+  if (to.matched.some(r => r.meta.guest) && state.user) {
+    next({ name: 'home' })
+    return
   }
   next()
 })

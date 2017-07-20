@@ -60,8 +60,12 @@ export default function (app) {
     res.status(403).send(err)
   })
 
-  app.get('/user', privateRoute, (req, res) => {
-    sendUserInfo(req, res)
+  app.get('/user', (req, res) => {
+    if (!req.user) {
+      res.send('null')
+    } else {
+      sendUserInfo(req, res)
+    }
   })
 
   app.get('/logout', (req, res) => {

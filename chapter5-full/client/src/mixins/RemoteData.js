@@ -35,16 +35,7 @@ export default function (resources) {
           this.$data[key] = await this.$fetch(url)
         } catch (e) {
           console.error(e)
-          // If we are in a private route
-          // We go to the login screen
-          if (e.response && e.response.status === 403 &&
-              this.$route.matched.some(m => m.meta.private)) {
-            this.$router.replace({ name: 'login', params: {
-              wantedRoute: this.$route.fullPath,
-            }})
-          } else {
-            this.$data.remoteErrors[key] = e
-          }
+          this.$data.remoteErrors[key] = e
         }
         this.$data.remoteDataLoading--
       },
@@ -53,6 +44,8 @@ export default function (resources) {
     created () {
       for (const key in resources) {
         let url = resources[key]
+        // If the value is a function
+        // We watch its result
         if (typeof url === 'function') {
           this.$watch(url, (val) => {
             this.fetchResource(key, val)

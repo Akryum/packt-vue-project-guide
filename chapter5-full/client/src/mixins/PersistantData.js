@@ -1,19 +1,17 @@
-export default function (fields) {
-  let name
+export default function (id, fields) {
   return {
     created () {
-      name = this.$options.name
       for (const field of fields) {
-        const savedValue = localStorage.getItem(`${name}.${field}`)
-        if (savedValue) {
+        const savedValue = localStorage.getItem(`${id}.${field}`)
+        if (savedValue !== null) {
           this.$data[field] = JSON.parse(savedValue)
         }
       }
     },
 
     watch: fields.reduce((obj, field) => {
-      obj[field] = val => {
-        localStorage.setItem(`${name}.${field}`, JSON.stringify(val))
+      obj[field] = function (val) {
+        localStorage.setItem(`${id}.${field}`, JSON.stringify(val))
       }
       return obj
     }, {}),
@@ -21,7 +19,7 @@ export default function (fields) {
     methods: {
       saveAllPersistantData () {
         for (const field of fields) {
-          localStorage.setItem(`${name}.${field}`, JSON.stringify(this.$data[field]))
+          localStorage.setItem(`${id}.${field}`, JSON.stringify(this.$data[field]))
         }
       },
     },

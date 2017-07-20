@@ -9,7 +9,7 @@
     </div>
 
     <template v-else>
-
+      <!-- General info -->
       <section class="infos">
         <div class="info">
           Created on <strong>{{ ticket.date | date }}</strong>
@@ -21,12 +21,11 @@
           Status <span class="badge">{{ ticket.status }}</span>
         </div>
       </section>
-
+      <!-- Content -->
       <section class="content">
         <h3>{{ ticket.title }}</h3>
         <p>{{ ticket.description }}</p>
       </section>
-
     </template>
   </div>
 </template>

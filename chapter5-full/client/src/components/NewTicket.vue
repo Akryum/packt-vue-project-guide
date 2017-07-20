@@ -1,30 +1,59 @@
 <template>
   <div class="new-ticket">
-    <SmartForm title="New ticket" :operation="operation" :valid="valid" reloadOnUnauthorized>
-      <div class="row">
-        <input name="title" v-model="title" placeholder="Short description (max 100 chars)" maxlength="100" required/>
-      </div>
-      <div class="row">
-        <textarea name="description" v-model="description" placeholder="Describe your problem in details" required rows="4"/>
-      </div>
+    <h1>New ticket</h1>
+    <SmartForm
+     title="New ticket"
+     :operation="operation"
+     :valid="valid">
+      <FormInput
+        name="title"
+        v-model="title"
+        placeholder="Short description (max 100 chars)"
+        maxlength="100"
+        required/>
+
+      <FormInput
+        type="textarea"
+        name="description"
+        v-model="description"
+        placeholder="Describe your problem in details"
+        required
+        rows="4"/>
 
       <template slot="actions">
-        <router-link tag="button" :to="{name: 'tickets'}" class="secondary">Go back</router-link>
-        <button type="submit" :disabled="!valid">Send ticket</button>
+        <router-link
+          tag="button"
+          :to="{name: 'tickets'}"
+          class="secondary">
+          Go back
+        </router-link>
+        <button
+          type="submit"
+          :disabled="!valid">
+          Send ticket
+        </button>
       </template>
-
     </SmartForm>
   </div>
 </template>
+
+<!--<script>
+export default {
+  data () {
+    return {
+      title: '',
+      description:'',
+    }
+  },
+}
+</script>-->
 
 <script>
 import PersistantData from '../mixins/PersistantData'
 
 export default {
-  name: 'NewTicket',
-
   mixins: [
-    PersistantData([
+    PersistantData('NewTicket', [
       'title',
       'description',
     ]),
@@ -52,9 +81,8 @@ export default {
           description: this.description,
         }),
       })
-      const obj = await result.json()
       this.title = this.description = ''
-      this.$router.push({ name: 'ticket', params: { id: obj._id } })
+      this.$router.push({ name: 'ticket', params: { id: result._id } })
     },
   },
 }
