@@ -19,7 +19,11 @@ for (const key in filters) {
 
 async function main () {
   // Get user info
-  state.user = await $fetch('user')
+  try {
+    state.user = await $fetch('user')
+  } catch (e) {
+    console.warn(e)
+  }
   // Launch app
   new Vue({
     el: '#app',
