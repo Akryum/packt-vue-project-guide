@@ -8,6 +8,11 @@
       :value.prop="text"
       @input="update"
       :placeholder="placeholder" />
+  </div>
+</template>-->
+
+<template>
+  <div class="row">
     <component
       :is="element"
       class="input"
@@ -19,7 +24,7 @@
       :placeholder="placeholder"
       v-bind="$attrs" />
   </div>
-</template>-->
+</template>
 
 <script>
 export default {
@@ -66,7 +71,7 @@ export default {
     },
   },
 
-  render (h) {
+  /* render (h) {
     return h('div', { class: 'row' }, [
       h(this.element, {
         class: ['input', this.inputClass],
@@ -83,7 +88,7 @@ export default {
         },
       }),
     ])
-  },
+  }, */
 }
 </script>
 
