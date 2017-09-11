@@ -1,0 +1,27 @@
+{
+  "name": "geolocated-blog",
+  "version": "1.0.0",
+  "description": "A geolocated blog web app.",
+  "scripts": {
+    "dev": "vue build src/index.js"
+  },
+  "author": "<Guillaume Chau> guillaume.b.chau@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-preset-vue": "^1.2.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "vue-cli": "^2.8.2",
+    "vue-loader": "^13.0.4",
+    "vue-template-compiler": "^2.4.2"
+  },
+  "dependencies": {
+    "moment": "^2.18.1",
+    "socket.io-client": "^2.0.3",
+    "vue": "^2.4.2",
+    "vue-router": "^2.7.0",
+    "vuex": "^2.4.0"
+  }
+}
