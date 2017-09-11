@@ -25,7 +25,7 @@
         }"
         :position="post.position"
         :z-index="5"
-        @click="selectPost(post)"
+        @click="selectPost(post._id)"
         />
 
       <!-- New post marker -->

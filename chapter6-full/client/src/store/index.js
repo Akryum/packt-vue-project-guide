@@ -40,7 +40,7 @@ const store = new Vuex.Store({
       await dispatch('login')
     },
 
-    async login ({ commit }) {
+    async login ({ commit, dispatch }) {
       try {
         const user = await $fetch('user')
         console.log('user', user)
@@ -48,6 +48,8 @@ const store = new Vuex.Store({
 
         if (user) {
           router.replace(router.currentRoute.params.wantedRoute || { name: 'home' })
+
+          dispatch('posts/logged-in')
         }
       } catch (e) {
         console.warn(e)
@@ -59,7 +61,7 @@ const store = new Vuex.Store({
 
       $fetch('logout')
 
-      dispatch('posts/reset')
+      dispatch('posts/logout')
 
       // If the route is private
       // We go to the login screen

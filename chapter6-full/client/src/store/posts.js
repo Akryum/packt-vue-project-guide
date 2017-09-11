@@ -98,9 +98,9 @@ export default {
       dispatch('selectPost', result)
     },
 
-    async fetchPosts ({ commit, state }, { mapBounds }) {
+    async fetchPosts ({ commit, state }, { mapBounds, force }) {
       let oldBounds = state.mapBounds
-      if (!oldBounds || !oldBounds.equals(mapBounds)) {
+      if (force || !oldBounds || !oldBounds.equals(mapBounds)) {
         commit('loading', true)
         const requestId = ++fetchPostsUid
         const ne = mapBounds.getNorthEast()
@@ -136,17 +136,29 @@ export default {
       })
     },
 
-    reset ({ commit }) {
+    'logged-in' ({ dispatch, state }) {
+      if (state.mapBounds) {
+        dispatch('fetchPosts', {
+          mapBounds: state.mapBounds,
+          force: true,
+        })
+      }
+      if (state.selectedPostId) {
+        dispatch('selectPost', state.selectedPostId)
+      }
+    },
+
+    logout ({ commit }) {
       commit('posts', {
         posts: [],
         mapBounds: null,
       })
     },
 
-    async selectPost ({ commit }, post) {
+    async selectPost ({ commit }, id) {
       commit('selectedPostDetails', null)
-      commit('selectedPostId', post._id)
-      const details = await $fetch(`posts/${post._id}`)
+      commit('selectedPostId', id)
+      const details = await $fetch(`posts/${id}`)
       commit('selectedPostDetails', details)
     },
 
