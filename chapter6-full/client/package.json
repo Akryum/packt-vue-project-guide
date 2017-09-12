@@ -8,9 +8,6 @@
   "author": "<Guillaume Chau> guillaume.b.chau@gmail.com",
   "license": "ISC",
   "devDependencies": {
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-preset-vue": "^1.2.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "vue-cli": "^2.8.2",
