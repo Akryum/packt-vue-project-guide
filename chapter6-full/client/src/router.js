@@ -10,7 +10,7 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/', name: 'home', component: GeoBlog, meta: { private: true } },
-  { path: '/welcome', name: 'login', component: Login },
+  { path: '/login', name: 'login', component: Login },
   { path: '*', component: NotFound },
 ]
 
