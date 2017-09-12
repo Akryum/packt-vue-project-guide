@@ -4,12 +4,14 @@ import store from './store'
 
 import Welcome from './components/Welcome.vue'
 import GeoBlog from './components/GeoBlog.vue'
+import NotFound from './components/NotFound.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   { path: '/', name: 'home', component: GeoBlog, meta: { private: true } },
   { path: '/welcome', name: 'login', component: Welcome },
+  { path: '*', component: NotFound },
 ]
 
 const router = new VueRouter({
