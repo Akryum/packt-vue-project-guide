@@ -13,9 +13,9 @@ import { mapActions } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions({
-      login: 'login',
-    }),
+    ...mapActions([
+      'login',
+    ]),
 
     openGoogleSignin () {
       const url = 'http://localhost:3000/auth/google'
