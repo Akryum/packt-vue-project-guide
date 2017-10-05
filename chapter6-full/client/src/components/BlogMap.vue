@@ -8,8 +8,8 @@
       @update:center="setCenter"
       @update:zoom="setZoom"
       @idle="onIdle"
-      @click="onMapClick">
-
+      @click="onMapClick"
+    >
       <!-- User Position -->
       <googlemaps-user-position
         @update:position="setUserPosition"
@@ -67,7 +67,6 @@ export default {
       'center',
       'zoom',
     ]),
-
     ...postsGetters([
       'draft',
       'posts',
