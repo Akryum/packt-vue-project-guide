@@ -6,7 +6,7 @@
     </div>
 
     <div class="user">
-      <div class="info">
+      <div class="info" v-if="user">
         <span class="picture" v-if="userPicture">
           <img :src="userPicture" />
         </span>

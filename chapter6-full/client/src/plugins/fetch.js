@@ -1,5 +1,4 @@
 import store from '../store'
-import router from '../router'
 
 let baseUrl
 

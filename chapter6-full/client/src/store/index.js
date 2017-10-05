@@ -23,12 +23,12 @@ const store = new Vuex.Store({
     userPicture: (state, getters) => {
       const user = getters.user
       if (user) {
-        const pictures = user.profile.photos
-        if (pictures.length !== 0) {
-          return pictures[0].value
+        const photos = user.profile.photos
+        if (photos.length !== 0) {
+          return photos[0].value
         }
       }
-    }
+    },
   },
 
   mutations: {
@@ -49,6 +49,7 @@ const store = new Vuex.Store({
         commit('user', user)
 
         if (user) {
+          // Redirect to the wanted route or home
           router.replace(router.currentRoute.params.wantedRoute || { name: 'home' })
 
           dispatch('posts/logged-in')

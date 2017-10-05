@@ -45,10 +45,8 @@ export default {
     PlaceDetails,
   },
 
-  computed: {
-    ...postsGetters([
-      'currentPost',
-    ]),
-  },
+  computed: postsGetters([
+    'currentPost',
+  ]),
 }
 </script>

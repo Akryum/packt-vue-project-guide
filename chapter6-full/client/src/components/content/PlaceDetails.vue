@@ -1,11 +1,14 @@
 <script>
 export default {
-  functional: true,
+  props: {
+    name: String,
+    address: String,
+  },
 
-  render (h, { props }) {
+  render (h) {
     return <div class="details">
-      <div class="name"><i class="material-icons">place</i> {props.name}</div>
-      <div class="address"> {props.address}</div>
+      <div class="name"><i class="material-icons">place</i> {this.name}</div>
+      <div class="address"> {this.address}</div>
     </div>
   },
 }

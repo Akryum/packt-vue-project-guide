@@ -18,7 +18,7 @@
       <button
         type="button"
         class="secondary"
-        @click="discard">
+        @click="clearDraft">
         <i class="material-icons">delete</i>
         Discard
       </button>
@@ -78,14 +78,10 @@ export default {
 
   methods: {
     ...postsActions([
+      'clearDraft',
       'createPost',
-      'setDraft',
       'updateDraft',
     ]),
-
-    discard () {
-      this.setDraft(null)
-    },
 
     async handleSubmit () {
       if (this.formValid) {

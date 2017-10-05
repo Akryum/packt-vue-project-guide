@@ -3,7 +3,9 @@ import VueFetch, { $fetch } from './plugins/fetch'
 import App from './components/App.vue'
 import router from './router'
 import store from './store'
-import VueGoogleMaps from 'vue-googlemaps'
+import { sync } from 'vuex-router-sync'
+import VueGoogleMaps, * as GMap from 'vue-googlemaps'
+import 'vue-googlemaps/dist/vue-googlemaps.css'
 import * as filters from './filters'
 
 // Filters
@@ -21,6 +23,8 @@ Vue.use(VueGoogleMaps, {
     libraries: ['places'],
   },
 })
+
+sync(store, router)
 
 async function main () {
   await store.dispatch('init')

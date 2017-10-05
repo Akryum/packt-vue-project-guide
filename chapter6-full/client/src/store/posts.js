@@ -7,11 +7,16 @@ export default {
 
   state () {
     return {
+      // New post being created
       draft: null,
-      loading: false,
+      // Bounds of the last fetching
+      // To prevent refetching
       mapBounds: null,
+      // Posts fetched in those map bounds
       posts: [],
+      // ID of the selected post
       selectedPostId: null,
+      // Fetched details for the selected post
       selectedPostDetails: null,
     }
   },
@@ -19,8 +24,10 @@ export default {
   getters: {
     draft: state => state.draft,
     posts: state => state.posts,
+    // The id field on posts is '_id' (MongoDB style)
     selectedPost: state => state.posts.find(p => p._id === state.selectedPostId),
     selectedPostDetails: state => state.selectedPostDetails,
+    // The draft has more priority than the selected post
     currentPost: (state, getters) => state.draft || getters.selectedPost,
   },
 
@@ -46,10 +53,6 @@ export default {
       }
     },
 
-    loading (state, value) {
-      state.value = value
-    },
-
     posts (state, { posts, mapBounds }) {
       state.posts = posts
       state.mapBounds = mapBounds
@@ -69,9 +72,13 @@ export default {
   },
 
   actions: {
-    createDraft ({ dispatch }) {
+    clearDraft ({ commit }) {
+      commit('draft', null)
+    },
+
+    createDraft ({ commit }) {
       // Default values
-      dispatch('setDraft', {
+      commit('draft', {
         title: '',
         content: '',
         position: null,
@@ -91,18 +98,19 @@ export default {
         method: 'POST',
         body: JSON.stringify(data),
       })
-      dispatch('setDraft', null)
+      dispatch('clearDraft')
 
       // Update the posts list
       commit('addPost', result)
-      dispatch('selectPost', result)
+      dispatch('selectPost', result._id)
     },
 
     async fetchPosts ({ commit, state }, { mapBounds, force }) {
       let oldBounds = state.mapBounds
       if (force || !oldBounds || !oldBounds.equals(mapBounds)) {
-        commit('loading', true)
         const requestId = ++fetchPostsUid
+
+        // Request
         const ne = mapBounds.getNorthEast()
         const sw = mapBounds.getSouthWest()
         const query = `posts?ne=${
@@ -113,14 +121,11 @@ export default {
         const posts = await $fetch(query)
 
         // We abort if we started another query
-        console.log(posts)
-        console.log(requestId, fetchPostsUid)
         if (requestId === fetchPostsUid) {
           commit('posts', {
             posts,
             mapBounds,
           })
-          commit('loading', false)
         }
       }
     },
@@ -155,7 +160,7 @@ export default {
       })
     },
 
-    async selectPost ({ commit }, id) {
+    async selectPost ({ commit, getters }, id) {
       commit('selectedPostDetails', null)
       commit('selectedPostId', id)
       const details = await $fetch(`posts/${id}`)
@@ -178,10 +183,6 @@ export default {
         method: 'POST',
         body: JSON.stringify(comment),
       })
-    },
-
-    setDraft ({ commit }, value) {
-      commit('draft', value)
     },
 
     setDraftLocation ({ dispatch, getters }, { position, placeId }) {

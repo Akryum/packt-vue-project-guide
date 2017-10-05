@@ -12,7 +12,8 @@
 
       <!-- User Position -->
       <googlemaps-user-position
-        @update:position="setUserPosition" />
+        @update:position="setUserPosition"
+      />
 
       <googlemaps-marker
         v-for="post of posts"
@@ -26,7 +27,7 @@
         :position="post.position"
         :z-index="5"
         @click="selectPost(post._id)"
-        />
+      />
 
       <!-- New post marker -->
       <googlemaps-marker
@@ -40,7 +41,7 @@
         :opacity=".75"
         :position="draft.position"
         :z-index="6"
-        />
+      />
     </googlemaps-map>
   </div>
 </template>
