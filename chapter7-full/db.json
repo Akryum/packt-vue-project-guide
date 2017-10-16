@@ -65,21 +65,6 @@
       "id": 1,
       "text": "This is awesome!",
       "itemId": 1
-    },
-    {
-      "text": "Meow",
-      "itemId": 7,
-      "id": 2
-    },
-    {
-      "text": "Waf",
-      "itemId": 7,
-      "id": 3
-    },
-    {
-      "text": "Meow?",
-      "itemId": 7,
-      "id": 4
     }
   ]
 }
