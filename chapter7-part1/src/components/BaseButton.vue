@@ -1,6 +1,7 @@
 <template>
   <button
     class="base-button"
+    :disabled="disabled"
     @click="onClick"
   >
     <i v-if="icon" class="material-icons icon" v-text="icon"></i>
@@ -28,6 +29,10 @@ export default {
     badge: {
       type: [String, Number],
       default: null,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
 

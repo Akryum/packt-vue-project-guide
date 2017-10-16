@@ -84,19 +84,24 @@ export default {
   },
 
   watch: {
-    cartCount (value) {
+    cartCount (value, oldValue) {
       clearTimeout(this.$_cartAnimationTimer)
       clearTimeout(this.$_cartCountTimer)
-      this.animateCart = false
-      this.$nextTick(() => {
-        this.animateCart = true
-        this.$_cartCountTimer = setTimeout(() => {
-          this.displayedCartCount = value
-        }, 500)
-        this.$_cartAnimationTimer = setTimeout(() => {
-          this.animateCart = false
-        }, 1000)
-      })
+
+      if (value > oldValue) {
+        this.animateCart = false
+        this.$nextTick(() => {
+          this.animateCart = true
+          this.$_cartCountTimer = setTimeout(() => {
+            this.displayedCartCount = value
+          }, 500)
+          this.$_cartAnimationTimer = setTimeout(() => {
+            this.animateCart = false
+          }, 1000)
+        })
+      } else {
+        this.displayedCartCount = value
+      }
     },
   },
 

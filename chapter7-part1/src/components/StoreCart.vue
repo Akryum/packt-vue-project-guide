@@ -20,6 +20,7 @@
         <span class="value">{{ cartTotal | money }}</span>
       </div>
       <BaseButton
+        :disabled="cartItems.length === 0"
         @click="checkout"
       >Checkout</BaseButton>
     </div>
@@ -47,12 +48,18 @@ export default {
       'setShowCart',
     ]),
 
+    ...mapActions('cart', [
+      'clearCart',
+    ]),
+
     close () {
       this.setShowCart(false)
     },
 
     checkout () {
-      // TODO
+      this.close()
+      this.clearCart()
+      this.$router.push({ name: 'checkout' })
     },
   },
 }
