@@ -1,5 +1,11 @@
 import Vue from 'vue'
 
+/**
+ * Creates a floating image that animate from an element to a target element.
+ *
+ * @export
+ * @param {object} { el, targetEl, imageUrl, imageClass }
+ */
 export function flyingImage ({ el, targetEl, imageUrl, imageClass }) {
   if (targetEl) {
     const bounds = el.getBoundingClientRect()

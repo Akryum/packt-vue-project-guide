@@ -9,6 +9,7 @@ import './plugins'
 import './components'
 import { createI18n, getAutoLang } from './utils/i18n'
 
+// Global filters
 for (const key in filters) {
   Vue.filter(key, filters[key])
 }
