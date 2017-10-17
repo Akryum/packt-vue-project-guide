@@ -3,7 +3,7 @@ var webpack = require('webpack')
 const FriendlyErrors = require('friendly-errors-webpack-plugin')
 
 module.exports = {
-  entry: './src/main.js',
+  entry: './src/entry-client.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
