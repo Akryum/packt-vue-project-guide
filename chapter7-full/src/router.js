@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import PageHome from './components/PageHome.vue'
 import PageStoreItem from './components/PageStoreItem.vue'
 import PageCheckout from './components/PageCheckout.vue'
+import PageLocale from './components/PageLocale.vue'
 import PageNotFound from './components/PageNotFound.vue'
 
 Vue.use(VueRouter)
@@ -12,6 +13,7 @@ const routes = [
   { path: '/', name: 'home', component: PageHome },
   { path: '/item/:id', name: 'store-item', component: PageStoreItem, props: route => ({ id: parseInt(route.params.id) }) },
   { path: '/checkout', name: 'checkout', component: PageCheckout },
+  { path: '/locale', name: 'locale', component: PageLocale },
   { path: '*', component: PageNotFound },
 ]
 

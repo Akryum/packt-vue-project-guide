@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
-
 import cart from './cart'
 import item from './item'
 import items from './items'
 import ui from './ui'
+
+Vue.use(Vuex)
 
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
@@ -14,7 +14,7 @@ const store = new Vuex.Store({
   actions: {
     init () {
       console.log('store init')
-    }
+    },
   },
 
   modules: {
@@ -27,7 +27,7 @@ const store = new Vuex.Store({
 
 export default store
 
-if (module.hot) {
+if (module.hot) {
   module.hot.accept([
     './cart',
     './item',
@@ -37,7 +37,7 @@ if (module.hot) {
     store.hotUpdate({
       modules: {
         cart: require('./cart').default,
-        items: require('./item').default,
+        item: require('./item').default,
         items: require('./items').default,
         ui: require('./ui').default,
       },

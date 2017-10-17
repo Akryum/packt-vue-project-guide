@@ -1,6 +1,9 @@
 <template>
   <footer class="app-footer">
-    Made with <a href="https://vuejs.org/">Vue.js</a> and ❤️
+    <div>Made with <a href="https://vuejs.org/">Vue.js</a> and ❤️</div>
+    <div v-if="$route.name !== 'locale'">
+      <router-link :to="{ name: 'locale' }">{{ $t('change-lang') }}</router-link>
+    </div>
   </footer>
 </template>
 
@@ -12,4 +15,3 @@
   padding 42px
   color $md-grey-300
 </style>
-

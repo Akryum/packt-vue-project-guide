@@ -9,7 +9,7 @@
             class="icon material-icons"
             v-text="icon"
           ></i>
-          {{ title }}
+          {{ title }}
         </div>
         <BaseButton
           class="icon-button secondary"
@@ -47,7 +47,6 @@ export default {
   },
 }
 </script>
-
 
 <style lang="stylus" scoped>
 @import "../styles/imports"

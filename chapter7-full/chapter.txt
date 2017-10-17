@@ -1,0 +1,440 @@
+WIP
+
+In this chapter, we will quickly setup a Fashion Store app, in order to focus on more advanced topics, such as:
+
+    Babel
+    Linting
+    Tests
+    SSR
+    i18n
+    Deployment
+
+
+The app will be a simple wearable online shop:
+
+screenshot
+Advanced development workflow
+
+In this first section, we will improve our development workflow with new tools and packages. But first, we need to setup our Fashion Store project.
+Project setup
+
+This time we will use a full project template generated using the vue init command. We will use the webpack-simple official template into a new e-shop folder:
+
+vue init webpack-simple e-shop
+
+This project template features a ready-to-use minimal webpack configuration that we will extend in this chapter.
+
+Answer the questions of vue-cli like this:
+
+? Project name e-shop
+? Project description An e-commerce app
+? Author Your Name <your-mail@mail.com>
+? Use sass? No
+
+Then go to the newly created e-shop folder and install the default dependencies already declared in the package.json file (like vue and webpack):
+
+cd e-shop
+npm install
+
+We will also install stylus:
+
+npm i -D stylus stylus-loader
+
+Now download the sources files [here] and extract them in a new src folder. Those contains all the app source code already done so we can move forward faster. We need to install a few more packages in the dependencies though:
+
+npm i -S axios vue-router vuex vuex-router-sync
+
+axios is a great library for making requests to the server and is recommended by the Vue.js team!
+Generating a quick development API
+
+Previously, we had a full node server for the backend, but this time we will not focus on the app features. So we will use the json-server package to generate a very simple local API for the purpose of this chapter. Install it as a dev dependency:
+
+npm i -D json-server
+
+When will run this package, it will locally expose a simple REST API and use a db.json file to store the data. You can download it [here] and put it in the project root directory. If you open it, you will see a few items for sale and a comment.
+
+Then, we need to add a script to launch the json server. Add a new db script to the package.json file:
+
+"db": "json-server --watch db.json"
+
+This command will run the json-server package command-line tool and watch the db.json file you just downloaded for changes so you can edit it easily. To try it, use npm run:
+
+npm run db
+
+By default it will listen to the port 3000. You can already try it by opening the http://localhost:3000/items REST address in your browser:
+
+screenshot
+Configuring babel
+
+As a reminder, babel is the tool that compiles our JavaScript code so we can use new features in older and current browsers (like JSX or arrow functions).
+
+By default, the webpack-simple template comes with a default babel configuration that uses the env babel preset which supports all the stable JavaScript version from ES2015. But the source code we downloaded earlier contains some new JavaScript syntax, so we need to install another babel preset called stage-0 which supports the upcoming JavaScript features like the async/await keywords.
+
+We also need to include the polyfills provided by babel so new features like Promise and generators work in older browsers.
+A polyfill is a code that checks if a feature is available in the browser, and if not it implements this feature so it works like is is native.
+Stage 0 preset
+
+So first we need to install this new preset in the dev dependencies:
+
+npm i -D babel-preset-stage-0
+
+The main babel configuration is done in the .babelrc json file already present in the project root.
+This file may be hidden in your file explorer, depending on the system. However it should be visible in your code editor if it has a file tree view.
+
+Open this .babelrc file and add the stage-0 preset to the corresponding list:
+
+{
+  "presets": [
+    ["env", { "modules": false }],
+    "stage-0"
+  ]
+}
+
+Polyfills
+
+Install the babel-polyfill package in your dev dependencies:
+
+npm i -D babel-polyfill
+
+Then, import it at the beginning of the src/main.js file:
+
+import 'babel-polyfill'
+
+This will enable all the necessary polyfills for the browser.
+Launching the app
+
+We are now ready to start the app! Open a new terminal and use npm run as usual:
+
+npm run dev
+
+It should open a new browser window with the right address and you should be able to use the app:
+
+screenshot
+Auto-prefixing CSS with PostCSS
+
+When writing CSS (or Stylus) code, we want it to be compatible with most browsers. Fortunately, there are tools that will do this automatically for us, for example by adding vendor prefixed versions of the CSS properties (like -webkit-user-select and -moz-user-select).
+
+PostCSS is a library specialized in CSS post-processing. It has a very modular architecture: it works by adding plugins to it that process the CSS in various ways.
+
+We don't have to install it: vue-loader already have PostCSS included! We only have to install the plugins we want. In our case, we need the autoprefixer package, to make our CSS code compatible with more browsers:
+
+npm i -D autoprefixer
+
+For PostCSS to be active, we need to add a configuration file called postcss.config.js in the project root directory. Let's tell PostCSS we want to use autoprefixer in this file:
+
+module.exports = {
+  plugins: [
+    require('autoprefixer'),
+  ],
+}
+
+That's it! Our code is now processed by autoprefixer. For example, take this Stylus code:
+
+.store-cart-item
+  user-select none
+
+The final CSS will be:
+
+.store-item[data-v-1af8c5dc] {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+Targeting specific browsers with browserslist
+
+We can change what browsers are targeted by autoprefixer with the browserslist configuration. It consists of a list of rules to determine which browsers to support. Create a new browserslist file (without extension) in the project root directory, and put the default values which are the following:
+
+> 1%
+last 2 versions
+Firefox ESR
+
+The first rule takes the browsers that have more than 1% of usage share on the Internet. The second one additionally selects the last two versions of every browsers. Finally, the special 'ESR' version of Firefox is also selected.
+The data used is provided by the caniuse.com site, which is specialized in browser compatibility data.
+
+You can now target even older browsers by customizing this file! For example, to target Firefox 20 and up, you would add the following rule:
+
+Firefox >= 20
+
+You can find more information about browserslist on its GitHub repository.
+Improving code quality and style with ESLint
+
+Enforcing good coding practices and quality is essential when working on a project with other developers. It ensures no syntax and basic errors are made, and it helps keeping the source code clean and consistent. This process is called 'linting'.
+
+ESLint is the recommended linting tool by the Vue.js team. It provides a set of linting rules that can be turned on and off to check the code quality. More rules can be added by plugins and some packages define a preset of enabled rules.
+
+We will use the StandardJS preset and the eslint-plug-vue package which adds more rules that help follow the official Vue style guide:
+
+npm i -D eslint eslint-config-standard eslint-plugin-vue@beta
+
+The eslint-config-standard package has 4 peer dependencies we need to install as well:
+
+npm i -D eslint-plugin-import eslint-plugin-node eslint-plugin-promise eslint-plugin-standard
+
+In order to use Babel for the JavaScript code when ESLint parses the files, we need an additional package:
+
+npm i -D babel-eslint
+
+Configuring ESLint
+
+Create a new .eslintrc.js file in the project root directory and write the following configuration:
+
+module.exports = {
+  // Use only this configuration
+  root: true,
+  // File parser
+  parser: 'vue-eslint-parser',
+  parserOptions: {
+    // Use babel-eslint for JavaScript
+    'parser': 'babel-eslint',
+    'ecmaVersion': 2017,
+    // With import/export syntax
+    'sourceType': 'module'
+  },
+  // Environment global objects
+  env: {
+    browser: true,
+    es6: true,
+  },
+  extends: [
+    // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
+    'standard',
+    // https://github.com/vuejs/eslint-plugin-vue#bulb-rules
+    'plugin:vue/recommended',
+  ],
+}
+
+First, we use the vue-eslint-parser to read the files (including the .vue files). It uses babel-eslint when parsing the JavaScript code. We also specify the EcmaScript version of JavaScript, and that we use the import/export syntax for the modules.
+
+Then we tell ESLint that we expect to be in a browser and ES6 (or ES2015) JavaScript environment, which means we should be able to access globals like window or Promise without ESLint raising undefined variable errors.
+
+We also specify which configurations (or presets) we would like to use: standard and vue/recommended.
+Customizing the rules
+
+We can change what rules are enabled and modify their options with the rules object. Add the following to the ESLint configuration:
+
+rules: {
+  // https://github.com/babel/babel-eslint/issues/517
+  'no-use-before-define': 'off',
+  'comma-dangle': ['error', 'always-multiline'],
+},
+
+The first line disables the no-use-before-define rule which has a bug when using the ... destructuration operator. The second one change the commad-dangle rule to enforce putting a trailing , comma at the end of all the array and object lines.
+The rules have a status which can take on those three values: 'off' (or 0), 'warn' (or 1) and 'error' (or 2).
+Running ESLint
+
+To run eslint on the src folder, we need a new script in the package.json:
+
+"eslint": "eslint --ext .js,.jsx,.vue src"
+
+You should see some errors in the console:
+
+screenshot
+
+Some of those issues can be fixed by ESLint by adding the --fix argument to the eslint command above:
+
+"eslint": "eslint --ext .js,.jsx,.vue src --fix"
+
+Run it again and you should see only one error remaining:
+
+screenshot
+
+ESLint tells us we shouldn't create new objects without keeping their reference in a variable. If we look at the corresponding code, we see that we indeed create a new instance of Vue in the main.js file:
+
+new Vue({
+  el: '#app',
+  router,
+  store,
+  ...App,
+})
+
+If you look at the ESLint error, you can see the code of the rule: no-new. You can open the eslint.org website and type it in the search field to get the rule definition. If its a rule added by a plugin, it should have the name of the plugin followed by a slash. For example: vue/require-v-for-key.
+
+This code is written as intended, since this is the standard way of declaring a Vue app. So we need to disable this rule for this specific line of code, by adding a special comment just before:
+
+// eslint-disable-next-line no-new
+new Vue({
+  ...
+})
+
+ESLint inside Webpack
+
+For now, we have to manually run the eslint script to check our code. It would be even better if we were able to check our code when it is processed by Webpack, so it would be fully automatic. Fortunately, this is possible thanks to the eslint-loader! Install it in the dev dependencies alongside the friendly-errors-webpack-plugin package which will improve the console messages:
+
+npm i -D eslint-loader friendly-errors-webpack-plugin
+
+Now we have to change the webpack configuration to add a new ESLint loader rule. Edit the webpack.config.js file and add this new rule at the top of the module.rules option:
+
+module: {
+  rules: [
+    {
+      test: /\.(jsx?|vue)$/,
+      loader: 'eslint-loader',
+      enforce: 'pre',
+    },
+    // ...
+
+Additionally we can enable the friendly-errors-webpack-plugin package. Import it at the top of the file:
+
+const FriendlyErrors = require('friendly-errors-webpack-plugin')
+
+We can't use the import/export syntax here, since it will be executed in nodejs.
+Then, add this plugin when we are in development mode, by adding an else condition at the end of the configuration file:
+
+} else {
+  module.exports.plugins = (module.exports.plugins || []).concat([
+    new FriendlyErrors(),
+  ])
+}
+
+Finally, we can enable the webpack error overlay, which will be shown over the app inside the browser, by adding the devServer.overlay property:
+
+devServer: {
+  // ...
+  overlay: true,
+},
+
+Restart webpack by re-running the dev script, and remove a comma somewhere in the code. You should see the ESLint error displayed in the webpack output:
+
+screenshot
+
+In the browser, you should now see the error overlay:
+
+screenshot
+
+If you fix the error by putting the comma back again, the overlay will close and the console will display a friendly message:
+
+screenshot
+Unit Testing with Jest
+
+Important code and components should be unit tested to be sure they are working as intended and to prevent most regressions when the code evolves. The recommended test runner for Vue components is Jest from Facebook. It is quite fast with a cache system, and has an handy snapshot feature to help detect regressions even more.
+
+First, install Jest and the official Vue unit testing tools:
+
+npm i -D jest vue-test-utils
+
+We also need a few utilities related to Vue, to compile the .vue files with vue-jest and to take snapshots of the components:
+
+npm i -D jest-vue jest-serializer-vue vue-server-renderer
+
+The recommended way to get the HTML render of a component in node is using the vue-server-renderer package used to do Server-Side Rendering as we will see later in the chapter.
+
+Finally, we need some babel packages to support babel compilation and webpack dynamic imports inside Jest:
+
+npm i -D babel-jest babel-plugin-dynamic-import-node
+
+Configuring Jest
+
+To configure Jest, let's create a new jest.config.js file in the project root directory:
+
+module.exports = {
+  transform: {
+    '.+\\.jsx?$': '<rootDir>/node_modules/babel-jest',
+    '.+\\.vue$': '<rootDir>/node_modules/jest-vue',
+  },
+  snapshotSerializers: [
+    '<rootDir>/node_modules/jest-serializer-vue',
+  ],
+  mapCoverage: true,
+}
+
+The transform options define processors for the JavaScript and Vue files. Then we tell Jest to use jest-serializer-vue for serializing the snapshots of the components. We also enable the source maps with the mapCoverage option.
+
+You can find more configuration options on the Jest website.
+Babel configuration for Jest
+
+To support JavaScript import/export modules and dynamic imports inside Jest, we need to change our babel configuration when the tests are run.
+When using Jest, we are not using webpack and the loaders we use to build the real application.
+We need to add two babel plugins to the configuration, when the NODE_ENV environment variable is set to 'test':
+
+{
+  "presets": [
+    ["env", { "modules": false }],
+    "stage-0"
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "transform-es2015-modules-commonjs",
+        "dynamic-import-node"
+      ]
+    }
+  }
+}
+
+The transform-es2015-modules-commonjs plugin add support of import/export syntax to Jest, and the dynamic-import-node adds support for dynamic imports.
+When run, Jest will automatically set the NODE_ENV environment variable to 'test'.
+Our first Unit Test
+
+To be recognized by Jest anywhere by default, we need to call our test files .test.js or .spec.js. We will test the BaseButton.vue component, so go ahead and create a new BaseButton.spec.js file next to it in the src/components folder. First we will import the component and the shallow method from vue-test-utils:
+
+import BaseButton from './BaseButton.vue'
+import { shallow } from 'vue-test-utils'
+
+Then we create a tests suite with the describe function:
+
+describe('BaseButton', () => {
+  // Tests here
+})
+
+Inside the tests suite, we can add our first unit test with the test function:
+
+describe('BaseButton', () => {
+  test('click event', () => {
+    // Test code
+  })
+})
+
+
+
+ESLint and Jest globals
+
+If we run ESLint now, we will get errors related to the Jest keywords like describe, test and expect:
+
+screenshot
+
+We need to make a tiny change to our ESLint configuration: we have to specify the jest environment. Edit the .eslintrc.js file:
+
+// Environment global objects
+env: {
+  browser: true,
+  es6: true,
+  jest: true,
+},
+
+Now ESLint will know about the Jest keywords and will stop complaining!
+Jest Snapshots
+
+
+
+
+
+To learn more about unit testing Vue components, you can visit the official guide at vue-test-utils.vuejs.org.
+Complementary Topics
+
+
+Internationalization
+
+
+npm i -S vue-i18n
+
+
+
+
+Server-Side Rendering
+
+
+
+
+
+To continue learning about SSR, you can visit the official documentation at ssr.vuejs.org or use an easy-to-use framework called nuxtjs which abstracts a lot of boilerplate away from you.
+Production & Deployment
+
+
+npm build
+
+
+
+
+Summary

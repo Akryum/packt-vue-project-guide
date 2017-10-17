@@ -111,13 +111,20 @@ export default {
       top 0
       font-size 24px
 
-  &.secondary
+  &.secondary,
+  &.selected
     background white
-    border-color rgba($color-primary, .3)
     color $color-primary
 
+  &.secondary
     &:hover
       background lighten($color-primary, 85%)
+
+  &.selected
+    box-shadow 0 6px 20px rgba($color-primary, .4)
+
+    &:hover
+      background lighten($color-primary, 95%)
 
   &[disabled='disabled']
     background $md-grey-400

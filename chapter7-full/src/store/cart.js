@@ -49,7 +49,7 @@ export default {
 
   mutations: {
     addStoreItem (state, id) {
-      const { index, item } = getCartItemById(state.cartItems, id)
+      const { item } = getCartItemById(state.cartItems, id)
       if (item && item.count < 99) {
         item.count++
       } else {
@@ -86,7 +86,7 @@ export default {
     },
 
     setCartItemCount (state, { id, count }) {
-      const { index, item } = getCartItemById(state.cartItems, id)
+      const { item } = getCartItemById(state.cartItems, id)
       if (item) {
         if (count < 1) {
           count = 1

@@ -49,4 +49,3 @@ export default {
     max-height 100%
     border-radius @border-radius
 </style>
-

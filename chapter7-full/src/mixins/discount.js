@@ -16,6 +16,6 @@ export default function discountMixin ({
         }
         return 0
       },
-    }
+    },
   }
 }

@@ -18,7 +18,7 @@
     border solid 3px transparent
     border-right-color $color-primary
     animation spinner .7s linear infinite
-  
+
   &.overlay
     position absolute
     top 0
@@ -32,4 +32,3 @@
   100%
     transform rotate(360deg)
 </style>
-

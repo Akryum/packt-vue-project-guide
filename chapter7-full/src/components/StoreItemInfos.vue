@@ -33,7 +33,7 @@ export default {
         discount: this.discount,
       }
     },
-  }
+  },
 }
 </script>
 

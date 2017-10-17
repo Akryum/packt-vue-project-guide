@@ -8,7 +8,7 @@
  * @returns
  */
 export function percentage (value) {
-  return `${Math.round(value*100).toLocaleString()}%`
+  return `${Math.round(value * 100).toLocaleString()}%`
 }
 
 /**
