@@ -51,6 +51,7 @@ export default {
   height 39px
   border-radius 3px
   background $color-primary
+  border solid 1px $color-primary
   color white
   cursor pointer
   display inline-block
@@ -80,9 +81,11 @@ export default {
 
   &:hover
     background lighten($color-primary, 10%)
+    border-color @background
 
   &:active
     background darken($color-primary, 10%)
+    border-color @background
 
   &.fab
     position fixed

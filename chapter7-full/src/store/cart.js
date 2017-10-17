@@ -101,9 +101,11 @@ export default {
   actions: {
     init: {
       handler ({ commit }) {
-        const savedItems = sessionStorage.getItem('cart-items')
-        if (savedItems) {
-          commit('setCartItems', JSON.parse(savedItems))
+        if (typeof sessionStorage !== 'undefined') {
+          const savedItems = sessionStorage.getItem('cart-items')
+          if (savedItems) {
+            commit('setCartItems', JSON.parse(savedItems))
+          }
         }
       },
       root: true,
@@ -130,7 +132,9 @@ export default {
     },
 
     saveCartItems ({ state }) {
-      sessionStorage.setItem('cart-items', JSON.stringify(state.cartItems))
+      if (typeof sessionStorage !== 'undefined') {
+        sessionStorage.setItem('cart-items', JSON.stringify(state.cartItems))
+      }
     },
 
     setCartItemCount ({ commit, dispatch }, { id, count }) {

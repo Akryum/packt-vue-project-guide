@@ -1,5 +1,5 @@
 <template>
-  <main class="page page-not-found">
+  <BasePage class="page-not-found">
     <h1>This page can't be found</h1>
     <p>
       Sorry, but we can't find the page you're looking for.<br>
@@ -9,7 +9,7 @@
     <div class="actions">
       <router-link :to="{ name: 'home' }">Return to home</router-link>
     </div>
-  </main>
+  </BasePage>
 </template>
 
 <style lang="stylus" scoped>

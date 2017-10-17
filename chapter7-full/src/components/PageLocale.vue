@@ -1,5 +1,5 @@
 <template>
-  <div class="page page-locale">
+  <BasePage class="page-locale">
     <transition name="fade">
       <BaseLoading
         v-if="loading"
@@ -32,7 +32,7 @@
         </div>
       </div>
     </transition>
-  </div>
+  </BasePage>
 </template>
 
 <script>

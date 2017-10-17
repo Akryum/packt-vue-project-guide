@@ -1,5 +1,5 @@
 <template>
-  <div class="page page-store-item">
+  <BasePage class="page-store-item">
     <div v-if="error" class="error">An error occured (sorry)</div>
     <template v-else>
       <!-- Details -->
@@ -64,7 +64,7 @@
         </div>
       </div>
     </template>
-  </div>
+  </BasePage>
 </template>
 
 <script>
@@ -75,6 +75,13 @@ import { flyingImage } from '../utils/animations'
 export default {
   components: {
     StoreItemInfos,
+  },
+
+  // SSR
+  asyncData ({ store, route }) {
+    return store.dispatch('item/fetchStoreItemDetails', {
+      id: route.params.id,
+    })
   },
 
   props: {
@@ -135,9 +142,11 @@ export default {
     },
 
     fetchData () {
-      this.fetchStoreItemDetails({
-        id: this.id,
-      })
+      if (!this.details || this.details.id !== this.id) {
+        this.fetchStoreItemDetails({
+          id: this.id,
+        })
+      }
     },
 
     async submitComment () {

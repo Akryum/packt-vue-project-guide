@@ -1,5 +1,5 @@
 <template>
-  <div class="page page-home">
+  <BasePage class="page-home">
     <transition name="fade">
       <BaseLoading
         v-if="loading"
@@ -19,7 +19,7 @@
         />
       </div>
     </transition>
-  </div>
+  </BasePage>
 </template>
 
 <script>
@@ -29,6 +29,11 @@ import StoreItem from './StoreItem.vue'
 export default {
   components: {
     StoreItem,
+  },
+
+  // SSR
+  asyncData ({ store }) {
+    return store.dispatch('items/fetchItems')
   },
 
   computed: {
@@ -45,7 +50,9 @@ export default {
   },
 
   mounted () {
-    this.fetchItems()
+    if (!this.items.length) {
+      this.fetchItems()
+    }
   },
 }
 </script>

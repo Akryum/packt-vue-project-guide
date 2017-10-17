@@ -24,7 +24,6 @@ export async function createApp (context) {
   await store.dispatch('init')
 
   const app = new Vue({
-    el: '#app',
     router,
     store,
     i18n,
