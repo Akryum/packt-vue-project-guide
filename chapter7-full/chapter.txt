@@ -136,10 +136,10 @@ That's it! Our code is now processed by autoprefixer. For example, take this Sty
 The final CSS will be:
 
 .store-item[data-v-1af8c5dc] {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 Targeting specific browsers with browserslist
@@ -288,13 +288,6 @@ Then, add this plugin when we are in development mode, by adding an else conditi
   ])
 }
 
-Finally, we can enable the webpack error overlay, which will be shown over the app inside the browser, by adding the devServer.overlay property:
-
-devServer: {
-  // ...
-  overlay: true,
-},
-
 Restart webpack by re-running the dev script, and remove a comma somewhere in the code. You should see the ESLint error displayed in the webpack output:
 
 screenshot
@@ -386,8 +379,31 @@ describe('BaseButton', () => {
   })
 })
 
+We will test if the click event is emitted when we click on the component. We need to create a wrapper object around the component that will provide useful functions to test the component:
 
+const wrapper = shallow(BaseButton)
 
+Then, we simulate a click on the component:
+
+wrapper.trigger('click')
+
+Finally, we check if the click event was emitted using the Jest expect method:
+
+expect(wrapper.emitted().click).toBeTruthy()
+
+Now, let's add a script in the package.json file to run Jest:
+
+"jest": "jest"
+
+Then, using the usual npm run command:
+
+npm run jest
+
+The tests are launched and should pass:
+
+screenshot
+
+To learn more about unit testing Vue components, you can visit the official guide at vue-test-utils.vuejs.org.
 ESLint and Jest globals
 
 If we run ESLint now, we will get errors related to the Jest keywords like describe, test and expect:
@@ -406,23 +422,460 @@ env: {
 Now ESLint will know about the Jest keywords and will stop complaining!
 Jest Snapshots
 
+Snapshots are strings that are saved and compared each time tests are run, to detect potential regression. They are mostly used to save the HTML render of component, but can be used for any value as long as it make sens to store it between tests and compare it.
 
+For our Vue component, we will snapshot the HTML render of it using the Server-Side Rendering tool called vue-server-renderer. We need the createRenderer method from this package:
 
+import { createRenderer } from 'vue-server-renderer'
 
+At the start of the test, we instanciate a renderer instance, then we wrap the component with shallow and start rendering the component to a String. Finally, we compare the result with the previous one. Here is an example of snapshot test for the BaseButton component, passing some props values and the default slot content:
 
-To learn more about unit testing Vue components, you can visit the official guide at vue-test-utils.vuejs.org.
+test('snapshot', () => {
+  const renderer = createRenderer()
+  const wrapper = shallow(BaseButton, {
+    // Props values
+    propsData: {
+      icon: 'add',
+      disabled: true,
+      badge: '3',
+    },
+    // Slots content
+    slots: {
+      default: '<span>Add Item</span>',
+    },
+  })
+  renderer.renderToString(wrapper.vm, (err, str) => {
+    if (err) throw new Error(err)
+    expect(str).toMatchSnapshot()
+  })
+})
+
+If the snapshot test is run for the first time, it will create and save the snapshot into a __snapshots__ folder next to it. If you are using a versioning system like git, you need to add these snapshot files to it.
+Updating the snapshots
+
+If you modify a component, there are chances that its HTML render will change too. This means its snapshots will no longer be valid and the Jest tests will fail. Fortunately, the jest command has a --updateSnapshots argument. When used, all the failing snapshots will be re-saved and will pass.
+
+Let's add a new script in our package.json file:
+
+"jest:update": "jest --updateSnapshot
+
+Modifiy the BaseButton component by changing a CSS class for example. if your run the Jest tests again, you should get an error: the snapshots don't match anymore.
+
+screenshot
+
+Now update the snapshot with the new script:
+
+npm run jest:update
+
+All the tests should pass now, and the BaseButton snapshot should be updated:
+
+screenshot
+You should run this command only when you are sure there are no gregressions elsewhere. A good idea is to run the tests normally just before, to make sure only the modified component snapshot fails, as expected. After you have updated the snapshots, use the normal test command.
 Complementary Topics
 
+In this section, we will cover a few more topics that can be usefull for bigger apps.
+Internationalization & Code-splitting
 
-Internationalization
-
+If the app is to be used by people in different countries, it should be translated to be more user-friendly and appealing. To localize the texts of the app, you can use the recommended vue-i18n package:
 
 npm i -S vue-i18n
 
+Using vue-i18n, we will add a link in the AppFooter component to a new page where the user can select the language. Only the link and this page will be translated, but you can translate more parts of the app if you wish. vue-i18n works by creating a i18n object from it with the translated messages, and injecting it into the Vue app.
 
+In the src/plugins.js file, install the new plugin into Vue:
 
+import VueI18n from 'vue-i18n'
 
+// ...
+
+Vue.use(VueI18n)
+
+Let's create a new folder called i18n in the project directory. Download the locales folder containing the translation files and put it inside. You should have for example the en translations in the i18n/locales/en.js file.
+
+Create a new index file that exports the list of available languages:
+
+export default [
+  'en',
+  'fr',
+  'es',
+  'de',
+]
+
+We need two new utility functions:
+
+    createI18n to create the i18n object, with a locale parameter.
+    getAutoLang that returns the two-letter language code set by the user in the browser, for example en or fr. Most of the time, this will be his OS language setting.
+
+In the src/utils folder, create a new i18n.js file and import both VueI18n and the list of available locales we defined earlier:
+
+import VueI18n from 'vue-i18n'
+import langs from '../../i18n'
+
+Code-splitting with dynamic imports
+
+When we create the i18n object, we want to load only the translations of the selected locale via the locale argument. To do that, we will make a dynamic import of the file with the import function. It takes the path as the argument, and returns a Promise which will eventually resolve to the corresponding JavaScript module once it is loaded from the server. In webpack, this dynamic import feature is sometimes refered as 'code splitting', because webpack will move the asynchronous module to another compiled JavaScript file called a chunk.
+
+Here is an example of an asynchronous module loaded with a dynamic import:
+
+async function loadAsyncModule () {
+  await module = await import('./path/to/module')
+  console.log('default export', module.default)
+  console.log('named export', module.myExportedFunction)
+}
+
+You can use variables in the imported path, as long as it is has some information about where webpack can find the files. For example, this code will not work:
+
+import(myModulePath)
+
+But this one will work fine as long as the variable path is simple (without ../):
+
+import(`./data/${myFileName}.json`)
+
+In this example, all the files with the json extension in the data folder will be added to the build into asynchronous chunks, because webpack can't guess which ones you will really use at runtime.
+
+Asynchronously loading big JavaScript modules with dynamic imports can reduce the size of the initial JavaScript code send to the browser when opening the page. In our app, it allows us to load only the relevant translations file instead of including them all in the initial JavaScript file.
+If a module is already imported with a normal import in the main code (the initial chunk), it will already be loaded and will not be split into another chunk. In that case, you won't have the benefits of the code-splitting feature and the initial file size won't be reduced. Note that you can synchronously use other modules with the normal import keyword inside the dynamically loaded module: they will be put together in the chunk (if they aren't already included in the initial chunk).
+
+The i18n object is created with the VueI18n constructor from the vue-i18n package. We will pass the locale argument and
+
+Here is what the createI18n function should look like:
+
+export async function createI18n (locale) {
+  const { default: localeMessages } = await import(`../../i18n/locales/${locale}`)
+  const messages = {
+    [locale]: localeMessages,
+  }
+
+  const i18n = new VueI18n({
+    locale,
+    messages,
+  })
+
+  return i18n
+}
+
+As you can see, we need to take the default value of the module, because we exported the messages using export default.
+
+The code using async/await above can be written using Promises that way:
+
+export function createI18n (locale) {
+  return import(`../../i18n/locales/${locale}`)
+    .then(module => {
+      const localeMessages = module.default
+      // ...
+    })
+}
+
+Automatically loading the user locale
+
+Next, we can use the navigator.language (or userLanguage for Internet Explorer compatibility) to retrieve the locale code. Then we check if it is available in the langs list or we use the default en locale. The getAutoLang function should look like this:
+
+export function getAutoLang () {
+  let result = window.navigator.userLanguage || window.navigator.language
+  if (result) {
+    result = result.substr(0, 2)
+  }
+  if (langs.indexOf(result) === -1) {
+    return 'en'
+  } else {
+    return result
+  }
+}
+
+Some browsers may return the code in the en-US format, but we only need the first two characters.
+
+In the src/main.js file, import the two new utility functions:
+
+import { createI18n, getAutoLang } from './utils/i18n'
+
+Then, modify the main function:
+
+    Retrieve the preferred locale using getAutoLang.
+    Create and wait for the i18n object with the createI18n function.
+    Inject the i18n object into the root Vue instance.
+
+It should now look like this:
+
+async function main () {
+  const locale = getAutoLang()
+  const i18n = await createI18n(locale)
+  await store.dispatch('init')
+
+  // eslint-disable-next-line no-new
+  new Vue({
+    el: '#app',
+    router,
+    store,
+    i18n, // Inject i18n into the app
+    ...App,
+  })
+}
+
+Don't forget the await keyword in front of createI18n, or else you will get the Promise instead.
+
+You can now open the network pane in the browser devtools and refresh the page. The translations module corresponding to the selected locale will be loaded by webpack in a separate request. In this example screenshot, this is the 2.build.js file which is asynchronously loaded:
+
+screenshot
+Change Language page
+
+For now, nothing really changed in the app, so let's add the page which will allow us to select the language. In the src/router.js file, import the PageLocale component:
+
+import PageLocale from './components/PageLocale.vue'
+
+Then add the locale route in the routes array, just before the last one (with the * path):
+
+{ path: '/locale', name: 'locale', component: PageLocale },
+
+In the AppFooter.vue component, add this router link to the template:
+
+<div v-if="$route.name !== 'locale'">
+  <router-link :to="{ name: 'locale' }">{{ $t('change-lang') }}</router-link>
+</div>
+
+As you can see, we use the $t provided by vue-i18n to display a translated text. The argument correspond to the key in the locale file.You should now see the link in the app footer:
+
+screenshot
+
+The links takes to the language selection page which is already fully translated using vue-i18n:
+
+screenshot
+
+You can look at its source code in the components/PageLocale.vue file.
+
+When you click on a locale button, the corresponding translations are loaded if they aren't alreay. In the network pane of the browser devtools, you should see a request made to other chunks each time:
+
+screenshot
 Server-Side Rendering
+
+Server-Side Rendering (or SSR) consists of running and rednering the app on the server, before sending the HTML back to the browser. This as two main advantages:
+
+    Better Search Engine Optimization (or SEO), since the initial content of the application will be rendered in the page HTML. This is important since no search engine is indexing asynchrous JavaScript app (for example when you have a spinner).
+    Slower networks or devices will display contents faster: the rendered HTML doesn't need the JavaScript to be shown to the user.
+
+But using SSR also bring some trade-offs:
+
+    The code need to be able to run on the server (unless it is in client-side only hooks like mounted). Also, some libraries may not play well on the browser and may require special treatments.
+    The load with increase on the server, since it is dowing more work.
+    The development setup is a bit more complex.
+
+So using SSR isn't always a good idea, especially if the time the first content is shown isn't critical (for example, an admin dashboard).
+Universal App Structure
+
+Writting an Universal App that runs both on the client and the server requires to change the architecture of the source code.
+
+When running on the client, we are in a fresh context each time the page is loaded. That's why we used singletons instance of the root instance, the router and the store until now. But now we need to have a fresh context on the server as well: the problem is, nodejs is statefull! The solution is creating a fresh new root instance, router and store for each request handled by the server.
+
+Let's start with the router! In the src/router.js file, wrap the router creation into a new exported createRouter function:
+
+export function createRouter () {
+  const router = new VueRouter({
+    routes,
+    mode: 'history',
+    scrollBehavior (to, from, savedPosition) {
+      // ...
+    },
+  })
+
+  return router
+}
+
+We will do the same with the Vuex store. In the src/store/index.js file, wrap the code into a new exported createStore function:
+
+export function createStore () {
+  const store = new Vuex.Store({
+    strict: process.env.NODE_ENV !== 'production',
+
+    // ...
+
+    modules: {
+      cart,
+      item,
+      items,
+      ui,
+    },
+  })
+
+  return store
+}
+
+Let's also rename the src/main.js file to src/app.js. This will be our universal file that creates the router, the store and the Vue root instance. Change the main function into an exported createApp function which takes a context argument and returns the app, the router and the store:
+
+export async function createApp (context) {
+  const router = createRouter()
+  const store = createStore()
+
+  sync(store, router)
+
+  const i18n = await createI18n(context.locale)
+  await store.dispatch('init')
+
+  const app = new Vue({
+    router,
+    store,
+    i18n,
+    ...App,
+  })
+
+  return {
+    app,
+    router,
+    store,
+  }
+}
+
+Don't forget to change the imports for createRouter and createStore!
+
+On the server, we won't select the initial locale the same way than in the client since we won't have access to window.navigator. That's why we are passing the locale in the context argument:
+
+const i18n = await createI18n(context.locale)
+
+We also removed the el option from the root instance definition since it doesn't make sense on the server.
+Client entry
+
+Create a new src/entry-client.js file that will be the entry point for the client bundle. It will get the user language, call the createApp function and then mount the app into the page:
+
+import { createApp } from './app'
+import { getAutoLang } from './utils/i18n'
+
+const locale = getAutoLang()
+createApp({
+  locale,
+}).then(({ app }) => {
+  app.$mount('#app')
+})
+
+You can now change the entry path in the webpack.config.js file:
+
+entry: './src/entry-client.js',
+
+You can restart the dev script and check that the app still works in the browser.
+Server entry
+
+Create a new src/entry-server.js file that will be the entry point for the server bundle. It will export a function that gets a context object from the HTTP server we will build later. It should return a Promise that resolves with the Vue app when it's ready.
+
+We will pass an url attribute to the context so we can set the current route like this:
+
+router.push(context.url)
+
+Similarly to the client entry, we also use the createApp function to create the root app instance, the router and the store. The entry-server.js should look like this:
+
+import { createApp } from './app'
+
+export default context => {
+  return new Promise(async (resolve, reject) => {
+    const { app, router, store } = await createApp(context)
+    // Set the current route
+    router.push(context.url)
+  })
+}
+
+The app root instance will be send back to what we call the renderer (kind of like when we did Jest snapshots).
+State management
+
+When processing a request, we need to fetch the data on the relevant components before rendering the app. That way, the data will already be displayed when the HTML is loaded by the browser! For example, PageHome.vue fetches the store items and PageStoreItem.vue retrieves the item details and comments.
+
+We will add a new asyncData custom option to those, so we can call it on the server when doing SSR. Edit the PageHome.vue component by adding this function that dispatches the fetchItems action of the items store module:
+
+asyncData ({ store }) {
+  return store.dispatch('items/fetchItems')
+},
+
+In the PageStoreItem.vue component, we need to call the fetchStoreItemDetails action of the item store module, with the id parameter of the route passed by the server:
+
+asyncData ({ store, route }) {
+  return store.dispatch('item/fetchStoreItemDetails', {
+    id: route.params.id,
+  })
+},
+
+Now that our components are ready, back to entry-server.js. We can use the router.getMatchedComponents() method to get the list of components that matched with the current route:
+
+router.push(context.url)
+
+router.onReady(() => {
+  const matchedComponents = router.getMatchedComponents()
+
+}, reject)
+
+We can then call all the asyncData options of these components and wait for them to finish. We pass both the store and the current route to them, and when they have all completed, we send the Vuex store state back to the renderer with context.state = store.state. Use Promise.all(array) to wait for all the asyncData calls:
+
+const matchedComponents = router.getMatchedComponents()
+
+Promise.all(matchedComponents.map(Component => {
+  if (Component.asyncData) {
+    return Component.asyncData({
+      store,
+      route: router.currentRoute,
+    })
+  }
+})).then(() => {
+  // Send back the store state
+  context.state = store.state
+
+  // Send the app to the renderer
+  resolve(app)
+}).catch(reject)
+
+If an error occurs, it will reject the Promise we returned to the renderer.
+Webpack configuration
+
+Our app code is now ready! Before continuing, we need to refactor our webpack configuration.
+
+We will need a slightly different webpack configuration for the client and the server. It is a good idea to have a common configuration file, which is then extended for the client and the server. We can do this easily with the webpack-merge package that merges multiples webpack configuration objects into one.
+
+For the server configuration, we also need the webpack-node-externals package to prevent webpack from bundling the packages in node_modules: this is not necessary since we will run inside nodejs and not in the browser. All the corresponding imports will be left as require statements so that node will load them itself.
+
+Install the packages in the dev dependencies:
+
+npm i -D webpack-merge webpack-node-externals
+
+Create a new webpack folder in the project root directory, then move and rename the webpack.config.js file to webpack/common.js. Some changes are needed:
+
+1. Remove the entry option from the configuration. This will be specified in the specific extended configurations.
+
+2. Update the output option to target the correct folder and to generate better chunk names:
+
+output: {
+  path: path.resolve(__dirname, '../dist'),
+  publicPath: '/dist/',
+  filename: '[name].[chunkhash].js',
+},
+
+
+
+
+
+Server-side setup
+
+In development, we can't use webpack-dev-server directly anymore with SSR. Instead, we will setup the express server with webpack. Download the server.dev.js file and put it in the project root directory. This file exports a setupDevServer function that we will use to run webpack and update the server.
+
+We will also need some packages for the development setup:
+
+npm i -D memory-fs chokidar webpack-dev-middleware webpack-hot-middleware
+
+We can create virtual file systems with memory-fs, watch files with chokidar and enable webpack Hot Module Replacement in an express server with the last two middlewares.
+Page template
+
+Create a new index.template.html file alongside index.html and copy its contents. Then replace the body content with the special <!--vue-ssr-outlet--> comment:
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Fashion Store</title>
+  </head>
+  <body>
+    <!--vue-ssr-outlet-->
+  </body>
+</html&gt;
+
+This special comment will be replaced by the rendered markup on the server.
+Express server
+
+On the nodejs side, we will use the express package to create our HTTP server:
+
+npm i -S express
+
 
 
 
@@ -432,7 +885,7 @@ To continue learning about SSR, you can visit the official documentation at ssr.
 Production & Deployment
 
 
-npm build
+npm run build
 
 
 

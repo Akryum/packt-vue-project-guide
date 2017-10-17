@@ -17,6 +17,7 @@ module.exports = merge(common, {
     whitelist: /\.css$/,
   }),
   plugins: [
+    // Generates the server bundle file
     new VueSSRServerPlugin(),
   ],
 })
