@@ -2,7 +2,7 @@
   "name": "demo",
   "description": "Trying out Vue.js!",
   "version": "1.0.0",
-  "author": "Guillaume Chau <alphadelta.fg@gmail.com>",
+  "author": "Guillaume Chau",
   "license": "MIT",
   "private": true,
   "scripts": {
