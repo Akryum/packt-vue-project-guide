@@ -12,7 +12,7 @@ import routes from './routes'
 
 const PORT = process.env.PORT || 3000
 const SECRET = process.env.SECRET || 'TR7_9cDZ5Re-@lT3Z1|58F'
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:4000'
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:8080'
 
 const corsOptions = {
   origin: CLIENT_ORIGIN,
