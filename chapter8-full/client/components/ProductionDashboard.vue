@@ -10,9 +10,9 @@
       />
       <ProductionIndicator
         class="danger"
-        :value="errorRatio"
+        :value="errorRate"
         title="Errors"
-        :info="`${Math.round(errorRatio * 100)}%`"
+        :info="`${Math.round(errorRate * 100)}%`"
       />
     </section>
 
@@ -48,6 +48,7 @@ export default {
     $subscribe: {
       'measures': [],
     },
+
     measures () {
       return Measures.find({}, {
         sort: { date: -1 },
@@ -69,7 +70,7 @@ export default {
       return total / this.length
     },
 
-    errorRatio () {
+    errorRate () {
       if (!this.length) return 0
       let total = this.measures.reduce(
         (total, measure) => total += measure.error ? 1 : 0,
