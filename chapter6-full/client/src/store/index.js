@@ -52,7 +52,7 @@ const store = new Vuex.Store({
           // Redirect to the wanted route or home
           router.replace(router.currentRoute.params.wantedRoute || { name: 'home' })
 
-          dispatch('posts/logged-in')
+          dispatch('logged-in')
         }
       } catch (e) {
         console.warn(e)
@@ -63,8 +63,6 @@ const store = new Vuex.Store({
       commit('user', null)
 
       $fetch('logout')
-
-      dispatch('posts/logout')
 
       // If the route is private
       // We go to the login screen

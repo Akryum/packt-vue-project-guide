@@ -141,23 +141,29 @@ export default {
       })
     },
 
-    'logged-in' ({ dispatch, state }) {
-      if (state.mapBounds) {
-        dispatch('fetchPosts', {
-          mapBounds: state.mapBounds,
-          force: true,
-        })
-      }
-      if (state.selectedPostId) {
-        dispatch('selectPost', state.selectedPostId)
-      }
+    'logged-in': {
+      handler ({ dispatch, state }) {
+        if (state.mapBounds) {
+          dispatch('fetchPosts', {
+            mapBounds: state.mapBounds,
+            force: true,
+          })
+        }
+        if (state.selectedPostId) {
+          dispatch('selectPost', state.selectedPostId)
+        }
+      },
+      root: true,
     },
 
-    logout ({ commit }) {
-      commit('posts', {
-        posts: [],
-        mapBounds: null,
-      })
+    logout: {
+      handler ({ commit }) {
+        commit('posts', {
+          posts: [],
+          mapBounds: null,
+        })
+      },
+      root: true,
     },
 
     async selectPost ({ commit, getters }, id) {
