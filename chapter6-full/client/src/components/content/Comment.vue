@@ -1,5 +1,5 @@
 <script>
-import { date } from 'src/filters'
+import { date } from '../../filters'
 
 export default {
   functional: true,

@@ -1,7 +1,7 @@
 {
-  "name": "geolocated-blog",
+  "name": "demo",
+  "description": "Trying out Vue.js!",
   "version": "1.0.0",
-  "description": "A geolocated blog web app.",
   "author": "Guillaume Chau",
   "license": "MIT",
   "private": true,
@@ -10,13 +10,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "moment": "^2.19.2",
-    "socket.io-client": "^2.0.4",
-    "vue": "^2.5.3",
-    "vue-googlemaps": "^0.0.6",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.0.1",
-    "vuex-router-sync": "^5.0.0"
+    "vue": "^2.4.4"
   },
   "browserslist": [
     "> 1%",
@@ -33,8 +27,6 @@
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.4",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",

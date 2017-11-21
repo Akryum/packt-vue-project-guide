@@ -6,12 +6,11 @@
       :request="{
         placeId: currentPost.placeId
       }">
-      <template scope="props">
-        <PlaceDetails
-          v-if="props.results"
-          :name="props.results.name"
-          :address="props.results.formatted_address" />
-      </template>
+      <PlaceDetails
+        slot-scope="props"
+        v-if="props.results"
+        :name="props.results.name"
+        :address="props.results.formatted_address" />
     </googlemaps-place-details>
 
     <!-- Position only -->
@@ -20,12 +19,11 @@
       :request="{
         location: currentPost.position,
       }">
-      <template scope="props">
-        <PlaceDetails
-          v-if="props.results"
-          :name="props.results[1].placeDetails.name"
-          :address="props.results[0].formatted_address" />
-      </template>
+      <PlaceDetails
+        slot-scope="props"
+        v-if="props.results"
+        :name="props.results[1].placeDetails.name"
+        :address="props.results[0].formatted_address" />
     </googlemaps-geocoder>
   </div>
   <div v-else></div>
