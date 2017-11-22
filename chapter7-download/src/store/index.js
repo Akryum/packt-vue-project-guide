@@ -25,4 +25,23 @@ const store = new Vuex.Store({
   },
 })
 
+// Hot module replacement for the store
+if (module.hot) {
+  module.hot.accept([
+    './cart',
+    './item',
+    './items',
+    './ui',
+  ], () => {
+    store.hotUpdate({
+      modules: {
+        cart: require('./cart').default,
+        item: require('./item').default,
+        items: require('./items').default,
+        ui: require('./ui').default,
+      },
+    })
+  })
+}
+
 export default store

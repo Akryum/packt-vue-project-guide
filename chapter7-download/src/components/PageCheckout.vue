@@ -1,5 +1,5 @@
 <template>
-  <main class="page page-checkout">
+  <BasePage class="page-checkout">
     <div class="hero">
       <i class="icon material-icons">done</i>
     </div>
@@ -9,7 +9,7 @@
     <div class="actions">
       <router-link :to="{ name: 'home' }">Return to home</router-link>
     </div>
-  </main>
+  </BasePage>
 </template>
 
 <style lang="stylus" scoped>

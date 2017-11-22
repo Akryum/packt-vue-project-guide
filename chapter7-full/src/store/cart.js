@@ -101,6 +101,7 @@ export default {
   actions: {
     init: {
       handler ({ commit }) {
+        // There is no 'sessionStorage' on the server
         if (typeof sessionStorage !== 'undefined') {
           const savedItems = sessionStorage.getItem('cart-items')
           if (savedItems) {
@@ -132,6 +133,7 @@ export default {
     },
 
     saveCartItems ({ state }) {
+      // There is no 'sessionStorage' on the server
       if (typeof sessionStorage !== 'undefined') {
         sessionStorage.setItem('cart-items', JSON.stringify(state.cartItems))
       }

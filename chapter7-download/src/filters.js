@@ -12,7 +12,7 @@ export function percentage (value) {
 }
 
 /**
- * Format an amount of money which is formatted using localization. Ex: 15.05 => '$15.05'
+ * Formats an amount of dollars using number localization. Ex: 15.05 => '$15.05'
  *
  * @export
  * @param {number} value

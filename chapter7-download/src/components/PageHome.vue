@@ -1,5 +1,5 @@
 <template>
-  <div class="page page-home">
+  <BasePage class="page-home">
     <transition name="fade">
       <BaseLoading
         v-if="loading"
@@ -19,7 +19,7 @@
         />
       </div>
     </transition>
-  </div>
+  </BasePage>
 </template>
 
 <script>

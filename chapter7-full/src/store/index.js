@@ -26,6 +26,7 @@ export function createStore () {
     },
   })
 
+  // Hot module replacement for the store
   if (module.hot) {
     module.hot.accept([
       './cart',

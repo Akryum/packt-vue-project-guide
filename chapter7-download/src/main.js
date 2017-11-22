@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import Vue from 'vue'
 import App from './components/App.vue'
 import router from './router'
@@ -7,6 +8,7 @@ import * as filters from './filters'
 import './plugins'
 import './components'
 
+// Global filters
 for (const key in filters) {
   Vue.filter(key, filters[key])
 }

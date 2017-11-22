@@ -126,4 +126,6 @@ export default {
 .animation.flying-image.store-item
   max-width 100px
   max-height @max-width
+  min-width @max-width
+  min-height @max-width
 </style>
