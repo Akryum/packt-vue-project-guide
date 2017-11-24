@@ -1,7 +1,7 @@
 <template>
   <main class="not-found">
     <h1>This page can't be found</h1>
-    <p>
+    <p class="more-info">
       Sorry, but we can't find the page you're looking for.<br>
       It might have been moved or deleted.<br>
       Check your spelling or click below to return to the homepage.
@@ -13,7 +13,7 @@
 </template>
 
 <style lang="stylus" scoped>
-p {
+.more-info {
   text-align: center;
 }
 </style>
