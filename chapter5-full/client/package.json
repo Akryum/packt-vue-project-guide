@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "moment": "^2.19.2",
-    "vue": "^2.5.3",
+    "vue": "^2.5.8",
     "vue-router": "^3.0.1"
   },
   "browserslist": [
@@ -32,7 +32,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "vue-loader": "^13.0.5",
-    "vue-template-compiler": "^2.4.4",
+    "vue-template-compiler": "^2.5.8",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
   }
