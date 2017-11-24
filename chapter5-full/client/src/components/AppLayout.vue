@@ -1,7 +1,7 @@
 <template>
   <div class="app-layout">
-    <header>
-      <div><img src="../assets/logo.svg"/></div>
+    <header class="header">
+      <div><img class="img" src="../assets/logo.svg"/></div>
       <div>My shirt shop</div>
     </header>
     <NavMenu />
@@ -27,8 +27,8 @@ export default {
 </style>
 
 <style lang="stylus" scoped>
-header {
-  img {
+.header {
+  .img {
     width: 64px;
     height: 64px;
   }
