@@ -83,7 +83,7 @@ export default {
       'updateDraft',
     ]),
 
-    async handleSubmit () {
+    handleSubmit () {
       if (this.formValid) {
         this.createPost(this.draft)
       }
