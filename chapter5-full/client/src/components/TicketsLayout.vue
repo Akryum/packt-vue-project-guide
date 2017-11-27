@@ -22,9 +22,3 @@ export default {
   }
 }
 </script> -->
-
-<style lang="stylus" scoped>
-.actions {
-  margin-bottom: 32px;
-}
-</style>
